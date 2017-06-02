@@ -1,0 +1,57 @@
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4">
+                <div class="login-panel panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">New User </h3>
+                    </div>
+                    <div class="panel-body">
+                        <form role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                	<label for="enabledSelect">Type</label>
+                                    <select id="enabledSelect" class="form-control">
+                                    	<option> Coordinator</option>
+                                        <option> Engineer</option>
+                                        <option> Manager</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                	<label for="disabledSelect">Team</label>
+                                    <select id="disabledSelect" class="form-control">
+                                    	<option> List of Teams</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <input class="form-control" placeholder="Enter Number" id="firstnameuser">
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control" placeholder="Enter Number" id="lastnameuser">
+                                </div>
+                                <div class="form-group">
+                                    <label>Service</label>
+                                    <input class="form-control" placeholder="Enter Number" id="serviceuser">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    <input class="form-control" placeholder="Enter Number" id="emailuser">
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea class="form-control" rows="3"></textarea>
+                                </div>
+
+                                <!-- Change this to a button or input when using this as a form -->
+                                <a ui-sref="HomeManager.ProjectM" class="btn btn-lg btn-primary btn-block">Add User</a>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

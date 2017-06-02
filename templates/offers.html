@@ -1,0 +1,25 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">Liste des offres</div>
+    <div class="panel-body">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+					 <th>Company</th>
+					 <th>Place</th>
+					 <th>Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="offer in offers">
+                    <td>{{ offer.title }}</td>
+                    <td>{{ offer.description }}</td>
+					<td>{{ offer.company }}</td>
+			    <td>{{ offer.place }}</td>
+					<td>{{ offer.source }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
