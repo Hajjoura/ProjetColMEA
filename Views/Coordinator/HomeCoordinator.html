@@ -278,11 +278,16 @@
                          <li>
                             <a ui-sref=".DashboardC"><i class="fa fa-paperclip fa-fw"></i> Dashboard </a>
                         </li>
-                        
-                        <li>
-                            <a ui-sref=".ProjectC"><i class="fa fa-gear fa-fw"></i> Projects </a>
+
+                        <li> <a ui-sref=".ProjectC"><i class="fa fa-gear fa-fw"></i> Projects </a>
+                            <ul class="nav nav-second-level">
+                                <li> <a ui-sref=".ProjectC">List of Projects</a> </li>
+                                <li> <a ui-sref=".ListStudieC">List of Studies by Project</a> </li>
+                                <li> <a ui-sref=".ListPartitionC">List of Partitions by Project</a> </li>
+                                <li> <a ui-sref=".ListEngineerC">List of Engineers by Project</a> </li>
+                            </ul>
                         </li>
-                        
+
                         <li>
                             <a ui-sref=".PartitionC"><i class="fa fa-gears fa-fw"></i> Partitions </a>
                         </li>

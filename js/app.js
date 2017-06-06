@@ -158,9 +158,20 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
 
         })
         .state('HomeCoordinator.ProjectC', {
-            url: '/ProjectM',
-            templateUrl: 'Views/Coordinator/Project.html',
-            controller: 'ProjectMCtrl'
+            url: '/ProjectC',
+            templateUrl: 'Views/Coordinator/Project.html'
+        })
+        .state('HomeCoordinator.ListEngineerC', {
+            url: '/ListEngineerC',
+            templateUrl: 'Views/Coordinator/ListEngineers.html'
+        })
+        .state('HomeCoordinator.ListPartitionC', {
+            url: '/ListPartitionsC',
+            templateUrl: 'Views/Coordinator/ListPartitions.html'
+        })
+        .state('HomeCoordinator.ListStudieC', {
+            url: '/ListStudieC',
+            templateUrl: 'Views/Coordinator/ListStudies.html'
         })
         .state('HomeCoordinator.PartitionC', {
             url: '/PartitionC',
