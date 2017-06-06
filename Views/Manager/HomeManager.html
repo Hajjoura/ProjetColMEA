@@ -278,12 +278,20 @@
                             <a   ui-sref=".DashboardM"><i class="fa fa-paperclip fa-fw " ></i> Dashboard </a>
                         </li>
 
-                        <li>
-                            <a ui-sref=".ProjectM"><i class="fa fa-gear fa-fw"></i> Projects </a>
-                        </li>
 
+                        <li> <a ui-sref=".ProjectM"><i class="fa fa-gear fa-fw"></i> Projects </a>
+                            <ul class="nav nav-second-level">
+                                <li> <a  ui-sref=".ProjectM">List of Project</a> </li>
+                                <li> <a  ui-sref=".ListStudieM">List of Studies by Project</a> </li>
+                                <li> <a  ui-sref=".ListPartitionM">List of Partitions by Project</a> </li>
+                                <li> <a  ui-sref=".ListEngineerM">List of Engineers by Project</a> </li>
+                            </ul>
+                        </li>
                         <li>
                             <a ui-sref=".PartitionM"><i class="fa fa-gears fa-fw"></i> Partitions </a>
+                        </li>
+                        <li>
+                            <a ui-sref=".TradeOff"><i class="fa fa-bar-chart-o fa-fw "></i> TradeOff </a>
                         </li>
 
                         <li>

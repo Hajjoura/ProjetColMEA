@@ -43,6 +43,23 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
             templateUrl: 'Views/Manager/Project.html',
             controller: 'ProjectMCtrl'
         })
+        .state('HomeManager.ListEngineerM', {
+            url: '/ListEngineerM',
+            templateUrl: 'Views/Manager/ListEngineers.html'
+        })
+        .state('HomeManager.ListPartitionM', {
+            url: '/ListPartitionsM',
+            templateUrl: 'Views/Manager/ListPartitions.html'
+        })
+        .state('HomeManager.ListStudieM', {
+            url: '/ListStudieM',
+            templateUrl: 'Views/Manager/ListStudies.html'
+        })
+        .state('HomeManager.TradeOff', {
+            url: '/TradeOffM',
+            templateUrl: 'Views/Manager/TradeOff.html'
+        })
+
         .state('HomeManager.PartitionM', {
             url: '/PartitionM',
             templateUrl: 'Views/Manager/Partition.html',
