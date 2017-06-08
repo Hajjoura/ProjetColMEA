@@ -23,6 +23,14 @@ angular.module('ColMEA.controllers', [])
     })
     .controller('CoordinatorMCtrl', function($scope, $http, localStorageService) {
 
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Coordinators'
+        }).then(function successCallback(response) {
+            $scope.coordinators = response.data;
+        }, function errorCallback(response) {
+
+        });
     })
     .controller('EngineerMCtrl', function($scope, $http, localStorageService) {
         $http({
@@ -64,10 +72,49 @@ angular.module('ColMEA.controllers', [])
         }, function errorCallback(response) {
 
         });
+        $scope.addProject = function(project){
+            $scope.project = project;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Projects',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.project
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.ProjectM');
+            }, function errorCallback(response) {
+                $state.go('HomeManager.ProjectM');
+            });
+        };
     })
     .controller('PartitionMCtrl', function($scope, $http, localStorageService) {
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Partitions'
+        }).then(function successCallback(response) {
+            $scope.partitions = response.data;
+        }, function errorCallback(response) {
 
+        });
+    })
+    .controller('PartitionManagCtrl', function($scope, $http, localStorageService) {
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Variables'
+        }).then(function successCallback(response) {
+            $scope.variables = response.data;
+        }, function errorCallback(response) {
 
+        });
+    })
+    .controller('ProjectCCtrl', function($scope, $http, localStorageService) {
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Projects/findProjectsByCoordinator/2'
+        }).then(function successCallback(response) {
+            $scope.projects = response.data;
+        }, function errorCallback(response) {
+
+        });
     })
     .controller('UpdateresumeCtrl', function($scope, $http, localStorageService, $state, $window) {
         $scope.ed =[];

@@ -7,31 +7,31 @@
                         <h3 class="panel-title">New Project</h3>
                     </div>
                     <div class="panel-body">
-                        <form role="form">
+                        <form role="form" ng-controller="ProjectMCtrl">
                             <fieldset>
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" placeholder="Enter Name" id="nameproject">
+                                    <input class="form-control" ng-model="project.name" placeholder="Enter Name" id="nameproject">
                                 </div>
                                 <div class="form-group">
                                     <label>Version</label>
-                                    <input class="form-control" placeholder="Enter Version" id="versionproject">
+                                    <input class="form-control" ng-model="project.version" placeholder="Enter Version" id="versionproject">
                                 </div>
                                 <div class="form-group">
                                     <label>Start Date</label>
-                                    <input class="form-control" id="startdateproject" type="date">
+                                    <input class="form-control" ng-model="project.start_date" id="startdateproject" type="date">
                                 </div>
                                 <div class="form-group">
                                     <label>End Date</label>
-                                    <input class="form-control" id="enddateproject" type="date">
+                                    <input class="form-control" ng-model="project.end_date" id="enddateproject" type="date">
                                 </div>
                                 <div class="form-group">
                                     <label>State</label>
-                                    <input class="form-control" placeholder="Enter State" id="stateproject">
+                                    <input class="form-control" ng-model="project.state" placeholder="Enter State" id="stateproject">
                                 </div>
                                 
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a ui-sref="HomeManager.ProjectM" class="btn btn-lg btn-primary btn-block">Add Project</a>
+                                <button type="submit" ng-click="addProject(project)" class="btn btn-lg btn-primary btn-block">Add Project</button>
                             </fieldset>
                         </form>
                     </div>

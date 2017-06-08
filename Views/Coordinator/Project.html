@@ -1,6 +1,6 @@
 <!-- Page Content -->
 
-        <div class="row">
+        <div class="row" ng-controller="ProjectCCtrl">
             <div class="col-lg-12">
                 <h1 class="page-header">Projects Details</h1>
             </div>
@@ -59,15 +59,15 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="">
+                                        <tr class="" ng-repeat="p in projects">
+                                            <td> {{ p.id_project}} </td>
+                                            <td> {{p.name}}</td>
+                                            <td> {{p.versions}} </td>
+                                            <td> {{p.state}}</td>
                                             <td> - </td>
                                             <td> - </td>
-                                            <td> - </td>
-                                            <td> - </td>
-                                            <td> - </td>
-                                            <td> - </td>
-                                            <td class="center"> - </td>
-                                            <td class="center"> - </td>
+                                            <td class="center"> {{p.start_date}} </td>
+                                            <td class="center"> {{p.end_date}} </td>
                                         </tr>
                                         </tbody>
                                     </table>

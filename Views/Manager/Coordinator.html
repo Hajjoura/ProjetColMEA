@@ -4,7 +4,7 @@
 <!-- /.row -->
 
 <!-- /.row -->
-<div class="row">
+<div class="row" ng-controller="CoordinatorMCtrl">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading"> List of Coordinators </div>
@@ -54,13 +54,13 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr class="">
-                                        <td> - </td>
-                                        <td> - </td>
-                                        <td> - </td>
-                                        <td> - </td>
-                                        <td> - </td>
-                                        <td> - </td>
+                                    <tr class="" ng-repeat="c in coordinators">
+                                        <td> {{ c.id_user}} </td>
+                                        <td> {{c.first_name}} </td>
+                                        <td> {{c.last_name}}</td>
+                                        <td> {{c.service}} </td>
+                                        <td> {{c.email}}</td>
+                                        <td> {{c.note}} </td>
                                     </tr>
                                     </tbody>
                                 </table>
