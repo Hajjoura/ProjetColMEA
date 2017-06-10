@@ -11,6 +11,12 @@ angular.module('ColMEA.controllers', [])
 
         $scope.name=localStorageService.get("email");
     })
+    .controller('HomeECtrl', function($scope, $http, localStorageService) {
+
+        console.log(localStorageService.get("first_name"));
+
+        $scope.name=localStorageService.get("first_name");
+    })
     .controller('PartitionECtrl', function($scope, $http, localStorageService) {
         $scope.IsVisible = false;
         $scope.ShowHide = function () {
@@ -258,10 +264,9 @@ angular.module('ColMEA.controllers', [])
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function successCallback(response) {
                 $scope.user = response.data;
-                localStorageService.add("id_user",response.id_user);
-                localStorageService.add("first_name",response.first_name);
-                localStorageService.add("last_name",response.last_name);
-                localStorageService.add("email",response.email);
+                localStorageService.set("first_name",response.data.first_name);
+                localStorageService.set("last_name",response.data.last_name);
+                localStorageService.set("email",response.data.email);
                 $window.alert("Hello " + $scope.username);
                 $state.go('HomeManager');
 
@@ -276,7 +281,9 @@ angular.module('ColMEA.controllers', [])
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function successCallback(response) {
                 $scope.user = response.data;
-
+                localStorageService.set("first_name",response.data.first_name);
+                localStorageService.set("last_name",response.data.last_name);
+                localStorageService.set("email",response.data.email);
                 $window.alert("Hello " + $scope.username);
                 $state.go('HomeCoordinator');
 
@@ -291,6 +298,10 @@ angular.module('ColMEA.controllers', [])
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             }).then(function successCallback(response) {
                 $scope.user = response.data;
+                localStorageService.set("id_user",response.data.id_user);
+                localStorageService.set("first_name",response.data.first_name);
+                localStorageService.set("last_name",response.data.last_name);
+                localStorageService.set("email",response.data.email);
                 $window.alert("Hello " + $scope.username);
                 $state.go('HomeEngineer');
 
