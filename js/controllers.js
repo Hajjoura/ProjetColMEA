@@ -240,7 +240,7 @@ angular.module('ColMEA.controllers', [])
         $scope.id=localStorageService.get("id_user");
         $http({
             method: 'GET',
-            url: $scope.endpoint + 'Studies/findStudyByEngineer/'+$scope.id
+            url: $scope.endpoint + 'Studies/findStudiesByEngineer/'+$scope.id
         }).then(function successCallback(response) {
             $scope.studies = response.data;
         }, function errorCallback(response) {

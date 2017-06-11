@@ -10,13 +10,13 @@
                         <fieldset>
                             <div class="form-group">
                                 <label>Project: </label>
-                                <label> {{ studies.project.name}} </label>
+                                <label> {{ studies[1].project.name}} </label>
                             </div>
                             <div class="form-group">
                                 <label for="enabledSelect">Study</label>
                                 <select id="enabledSelect" class="form-control">
-                                    <option >
-                                        {{ studies.type}}
+                                    <option ng-repeat="st in studies">
+                                        {{ st.type}}
                                     </option>
 
                                 </select>
