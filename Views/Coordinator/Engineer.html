@@ -11,7 +11,7 @@
     </div>
     <!-- /.panel-heading -->
 
-    <div class="panel-body">
+    <div class="panel-body" ng-controller="EngineerCCtrl">
         <div class="row">
             <div class="form-group input-group">
                 <input type="search" class="form-control " placeholder=" ">
@@ -30,23 +30,19 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Service</th>
-                        <th> Team </th>
-                        <th> Domain </th>
                         <th>Email</th>
                         <th>Note</th>
                     </tr>
                     </thead>
                     <tbody>
 
-                    <tr class="">
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
-                        <td> - </td>
+                    <tr class="" ng-repeat=" e in engineers">
+                        <td> {{e.id_user}} </td>
+                        <td> {{e.first_name}} </td>
+                        <td> {{e.last_name}} </td>
+                        <td> {{e.service}} </td>
+                        <td> {{e.email}} </td>
+                        <td> {{e.note}}</td>
 
                     </tr>
 

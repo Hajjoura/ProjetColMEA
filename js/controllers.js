@@ -4,29 +4,32 @@ angular.module('ColMEA.controllers', [])
 
     })
 
+    //************************** Home Controllers ****************************//
 
     .controller('HomeMCtrl', function($scope, $http, localStorageService) {
 
         console.log(localStorageService.get("first_name"));
 
-        $scope.name=localStorageService.get("email");
+        $scope.name=localStorageService.get("first_name");
+        $scope.id=localStorageService.get("id_user");
     })
-    .controller('HomeECtrl', function($scope, $http, localStorageService) {
+    .controller('HomeCCtrl', function($scope, $http, localStorageService) {
 
         console.log(localStorageService.get("first_name"));
 
         $scope.name=localStorageService.get("first_name");
+        $scope.id =localStorageService.get("id_user");
     })
-    .controller('PartitionECtrl', function($scope, $http, localStorageService) {
-        $scope.IsVisible = false;
-        $scope.ShowHide = function () {
-            //If DIV is visible it will be hidden and vice versa.
-            $scope.IsVisible = $scope.IsVisible ? false : true;
-        }
-    })
-    .controller('PartitionManagCtrl', function($scope, $http, localStorageService) {
+    .controller('HomeECtrl', function($scope, $http, localStorageService) {
 
+        console.log(localStorageService.get("first_name"));
+        $scope.id=localStorageService.get("id_user");
+        $scope.name=localStorageService.get("first_name");
     })
+
+
+    //************************** Manager Controllers ****************************//
+
     .controller('CoordinatorMCtrl', function($scope, $http, localStorageService) {
 
         $http({
@@ -93,11 +96,21 @@ angular.module('ColMEA.controllers', [])
         };
     })
     .controller('PartitionMCtrl', function($scope, $http, localStorageService) {
+        $scope.id=localStorageService.get("id_user");
+
         $http({
             method: 'GET',
-            url: $scope.endpoint + 'Partitions'
+            url: $scope.endpoint + 'Studies/findStudiesByManager/'+$scope.id
         }).then(function successCallback(response) {
-            $scope.partitions = response.data;
+            $scope.Studies = response.data;
+        }, function errorCallback(response) {
+
+        });
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Projects'
+        }).then(function successCallback(response) {
+            $scope.projets = response.data;
         }, function errorCallback(response) {
 
         });
@@ -112,16 +125,241 @@ angular.module('ColMEA.controllers', [])
 
         });
     })
-    .controller('ProjectCCtrl', function($scope, $http, localStorageService) {
+    .controller('StudieMCtrl', function($scope, $http, localStorageService) {
         $http({
             method: 'GET',
-            url: $scope.endpoint + 'Projects/findProjectsByCoordinator/2'
+            url: $scope.endpoint + 'Studies'
+        }).then(function successCallback(response) {
+            $scope.studies = response.data;
+        }, function errorCallback(response) {
+
+        });
+    })
+    .controller('DashboardM', function($scope, $http, localStorageService) {
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Statistics/NbrProjects'
+        }).then(function successCallback(response) {
+            $scope.nbrPr = response.data;
+        }, function errorCallback(response) {
+
+        });
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Statistics/NbrPartitions'
+        }).then(function successCallback(response) {
+            $scope.nbrPart = response.data;
+        }, function errorCallback(response) {
+
+        });
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Statistics/NbrTeams'
+        }).then(function successCallback(response) {
+            $scope.nbrTeams = response.data;
+        }, function errorCallback(response) {
+
+        });
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Statistics/NbrEngineers'
+        }).then(function successCallback(response) {
+            $scope.nbrEng = response.data;
+        }, function errorCallback(response) {
+
+        });
+    })
+
+    //************************** Coordinator Controllers ****************************//
+    .controller('ProjectCCtrl', function($scope, $http, localStorageService) {
+
+        $scope.id=localStorageService.get("id_user");
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Studies/findStudiesByCoordinator/'+$scope.id
         }).then(function successCallback(response) {
             $scope.projects = response.data;
         }, function errorCallback(response) {
 
         });
     })
+
+    .controller('StudieCCtrl', function($scope, $http, localStorageService) {
+
+        $scope.id=localStorageService.get("id_user");
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Studies/findStudiesByCoordinator/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.studies = response.data;
+        }, function errorCallback(response) {
+
+        });
+    })
+    .controller('PartitionCCtrl', function($scope, $http, localStorageService) {
+
+        $scope.id=localStorageService.get("id_user");
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Studies/findStudiesByCoordinator/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.studies = response.data;
+        }, function errorCallback(response) {
+
+        });
+    })
+    .controller('EngineerCCtrl', function($scope, $http, localStorageService) {
+
+        $scope.id=localStorageService.get("id_user");
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Engineers/findEnginnersByCoordinator/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.engineers = response.data;
+        }, function errorCallback(response) {
+
+        });
+    })
+    .controller('TeamCCtrl', function($scope, $http, localStorageService) {
+
+        $scope.id=localStorageService.get("id_user");
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Teams'
+        }).then(function successCallback(response) {
+            $scope.teams = response.data;
+        }, function errorCallback(response) {
+
+        });
+    })
+
+    //************************** Engineer Controllers ****************************//
+
+    .controller('PartitionECtrl', function($scope, $http, localStorageService) {
+        $scope.id=localStorageService.get("id_user");
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Studies/findStudyByEngineer/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.studies = response.data;
+        }, function errorCallback(response) {
+
+        });
+    })
+    .controller('DashboardECtrl', function($scope, $http, localStorageService) {
+
+        $scope.id=localStorageService.get("id_user");
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Studies/findStudyByEngineer/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.dash = response.data;
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + 'Coordinators/findCoordinatorByTeam/'+$scope.dash.team.id_team
+            }).then(function successCallback(response) {
+                $scope.coordinator = response.data;
+                $http({
+                    method: 'GET',
+                    url: $scope.endpoint + 'Engineers/findEnginnersByNameTeam/'+$scope.dash.team.name
+                }).then(function successCallback(response) {
+                    $scope.engineers = response.data;
+                }, function errorCallback(response) {
+
+                });
+            }, function errorCallback(response) {
+
+            });
+
+        }, function errorCallback(response) {
+
+        });
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Partitions/findPartitionByEngineer/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.part = response.data;
+        }, function errorCallback(response) {
+
+        });
+
+
+    })
+    //************************** Common Controllers ****************************//
+
+    .controller('LoginCtrl', function ($scope,$http,$state, $window,localStorageService) {
+        $scope.loginM = function () {
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + "Users/auth/"+$scope.username +"/"+$scope.password,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function successCallback(response) {
+                $scope.user = response.data;
+                localStorageService.set("id_user",response.data.id_user);
+                localStorageService.set("first_name",response.data.first_name);
+                localStorageService.set("last_name",response.data.last_name);
+                localStorageService.set("email",response.data.email);
+                $window.alert("Hello " + $scope.username);
+                $state.go('HomeManager');
+
+            }, function errorCallback(response) {
+                $window.alert("Please enter your credentials!");
+            });
+        };
+        $scope.loginC = function () {
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + "Users/auth/"+$scope.username +"/"+$scope.password,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function successCallback(response) {
+                $scope.user = response.data;
+                localStorageService.set("id_user",response.data.id_user);
+                localStorageService.set("first_name",response.data.first_name);
+                localStorageService.set("last_name",response.data.last_name);
+                localStorageService.set("email",response.data.email);
+                $window.alert("Hello " + $scope.username);
+                $state.go('HomeCoordinator');
+
+            }, function errorCallback(response) {
+                $window.alert("Please enter your credentials!");
+            });
+        };
+        $scope.loginE = function () {
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + "Users/auth/"+$scope.username +"/"+$scope.password,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function successCallback(response) {
+                $scope.user = response.data;
+                localStorageService.set("id_user",response.data.id_user);
+                localStorageService.set("first_name",response.data.first_name);
+                localStorageService.set("last_name",response.data.last_name);
+                localStorageService.set("email",response.data.email);
+                $window.alert("Hello " + $scope.username);
+                $state.go('HomeEngineer');
+
+            }, function errorCallback(response) {
+                $window.alert("Please enter your credentials!");
+            });
+        };
+
+    })
+    //pause
+    .controller('LogoutCtrl', function($scope, $http, localStorageService, $window, $state) {
+       localStorageService.clearAll();
+        $state.go('login', {}, {reload: false});
+
+        $window.location.reload();
+    })
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
     .controller('UpdateresumeCtrl', function($scope, $http, localStorageService, $state, $window) {
         $scope.ed =[];
         $scope.ex = [];
@@ -256,68 +494,7 @@ angular.module('ColMEA.controllers', [])
             });
         };
     })
-    .controller('LoginCtrl', function ($scope,$http,$state, $window,localStorageService) {
-        $scope.loginM = function () {
-            $http({
-                method: 'GET',
-                url: $scope.endpoint + "Users/auth/"+$scope.username +"/"+$scope.password,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function successCallback(response) {
-                $scope.user = response.data;
-                localStorageService.set("first_name",response.data.first_name);
-                localStorageService.set("last_name",response.data.last_name);
-                localStorageService.set("email",response.data.email);
-                $window.alert("Hello " + $scope.username);
-                $state.go('HomeManager');
 
-            }, function errorCallback(response) {
-                $window.alert("Please enter your credentials!");
-            });
-        };
-        $scope.loginC = function () {
-            $http({
-                method: 'GET',
-                url: $scope.endpoint + "Users/auth/"+$scope.username +"/"+$scope.password,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function successCallback(response) {
-                $scope.user = response.data;
-                localStorageService.set("first_name",response.data.first_name);
-                localStorageService.set("last_name",response.data.last_name);
-                localStorageService.set("email",response.data.email);
-                $window.alert("Hello " + $scope.username);
-                $state.go('HomeCoordinator');
-
-            }, function errorCallback(response) {
-                $window.alert("Please enter your credentials!");
-            });
-        };
-        $scope.loginE = function () {
-            $http({
-                method: 'GET',
-                url: $scope.endpoint + "Users/auth/"+$scope.username +"/"+$scope.password,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function successCallback(response) {
-                $scope.user = response.data;
-                localStorageService.set("id_user",response.data.id_user);
-                localStorageService.set("first_name",response.data.first_name);
-                localStorageService.set("last_name",response.data.last_name);
-                localStorageService.set("email",response.data.email);
-                $window.alert("Hello " + $scope.username);
-                $state.go('HomeEngineer');
-
-            }, function errorCallback(response) {
-                $window.alert("Please enter your credentials!");
-            });
-        };
-
-    })
-    //pause
-    .controller('LogoutCtrl', function($scope, $http, localStorageService, $window, $state) {
-
-            $state.go('login', {}, {reload: false});
-
-        $window.location.reload();
-    })
 
     .controller('OffersCtrl', function($scope, $http) {
         $http({

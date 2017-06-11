@@ -255,7 +255,7 @@
                     <!-- /.dropdown-user -->
                 </li>
                 <li class="divider"></li>
-                <li><a ui-sref="login"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a ui-sref="logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
                 <!-- /.dropdown -->
             </ul>
@@ -280,13 +280,8 @@
                         </li>
 
                         <li> <a ui-sref=".ProjectC"><i class="fa fa-gear fa-fw"></i> Projects </a>
-                            <ul class="nav nav-second-level">
-                                <li> <a ui-sref=".ProjectC">List of Projects</a> </li>
-                                <li> <a ui-sref=".ListStudieC">List of Studies by Project</a> </li>
-                                <li> <a ui-sref=".ListPartitionC">List of Partitions by Project</a> </li>
-                                <li> <a ui-sref=".ListEngineerC">List of Engineers by Project</a> </li>
-                            </ul>
-                        </li>
+                        <li> <a ui-sref=".ListStudieC"><i class="fa fa-graduation-cap" ></i> Studies </a>
+
 
                         <li>
                             <a ui-sref=".PartitionC"><i class="fa fa-gears fa-fw"></i> Partitions </a>
@@ -308,13 +303,13 @@
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div class="container">
+        <div class="container" ng-controller="HomeCCtrl">
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <div class="row">
 
                         <div  ui-view>
-
+                            Welcome {{name}} with id {{id}}
                             <!-- /.col-lg-12 -->
                         </div>
                     </div>

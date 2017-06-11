@@ -52,22 +52,22 @@
                                             <th>Name</th>
                                             <th>Version</th>
                                             <th>State </th>
-                                            <th>Coordinator </th>
+                                            <th>Manager </th>
                                             <th>Team </th>
                                             <th>Start Date</th>
                                             <th>End Date</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="" ng-repeat="p in projects">
-                                            <td> {{ p.id_project}} </td>
-                                            <td> {{p.name}}</td>
-                                            <td> {{p.versions}} </td>
-                                            <td> {{p.state}}</td>
-                                            <td> - </td>
-                                            <td> - </td>
-                                            <td class="center"> {{p.start_date}} </td>
-                                            <td class="center"> {{p.end_date}} </td>
+                                        <tr class="" ng-repeat="s in projects">
+                                            <td> {{ s.project.id_project}} </td>
+                                            <td> {{s.project.name}}</td>
+                                            <td> {{s.project.version}} </td>
+                                            <td> {{s.project.state}}</td>
+                                            <td> {{s.project.manager.first_name}} </td>
+                                            <td> {{s.team.name}}</td>
+                                            <td class="center"> {{s.project.start_date}} </td>
+                                            <td class="center"> {{s.project.end_date}} </td>
                                         </tr>
                                         </tbody>
                                     </table>

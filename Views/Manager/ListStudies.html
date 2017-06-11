@@ -4,7 +4,7 @@
 
 
 <!-- /.row -->
-<div class="row">
+<div class="row" ng-controller="StudieMCtrl">
 <div class="col-lg-12">
 <div class="panel panel-default">
 <div class="panel-heading"> List of Studies </div>
@@ -48,14 +48,20 @@
             <th>Project Name</th>
             <th>Number</th>
             <th>Type</th>
+            <th> </th>
+
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
-            <td> - </td>
+          <tr ng-repeat=" s in studies">
+            <td> {{ s.id_study}} </td>
+            <td> {{ s.project.name}}</td>
+            <td> {{ s.number}} </td>
+            <td> {{s.type}} </td>
+            <td class="center">
+              <a href="#" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-align-justify"></span> Detail</a>
+            </td>
+
           </tr>
         </tbody>
       </table>

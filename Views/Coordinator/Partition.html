@@ -1,5 +1,5 @@
 
-    <div class="container">
+    <div class="container" ng-controller="PartitionCCtrl">
         <div class="row">
             <div class="col-md-4">
                 <div class="login-panel panel panel-default">
@@ -12,13 +12,13 @@
                                 <div class="form-group">
                                 	<label for="enabledSelect">Project</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option> List of Projects</option>
+                                    	<option ng-repeat="s in studies"> {{ s.project.name}}</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                 	<label for="enabledSelect">Study</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option> List of Studies</option>
+                                        <option ng-repeat="s in studies"> {{ s.type}}</option>
                                     </select>
                                 </div>
 

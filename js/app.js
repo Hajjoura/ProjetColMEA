@@ -36,7 +36,8 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
         })
         .state('HomeManager.DashboardM', {
             url: '/Dashboard',
-            templateUrl: 'Views/Manager/Dashboard.html'
+            templateUrl: 'Views/Manager/Dashboard.html',
+            controller: 'DashboardM'
 
         })
         .state('HomeManager.ProjectM', {
@@ -44,17 +45,11 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
             templateUrl: 'Views/Manager/Project.html',
             controller: 'ProjectMCtrl'
         })
-        .state('HomeManager.ListEngineerM', {
-            url: '/ListEngineerM',
-            templateUrl: 'Views/Manager/ListEngineers.html'
-        })
-        .state('HomeManager.ListPartitionM', {
-            url: '/ListPartitionsM',
-            templateUrl: 'Views/Manager/ListPartitions.html'
-        })
+
         .state('HomeManager.ListStudieM', {
             url: '/ListStudieM',
-            templateUrl: 'Views/Manager/ListStudies.html'
+            templateUrl: 'Views/Manager/ListStudies.html',
+            controller:'StudieMCtrl'
         })
         .state('HomeManager.TradeOff', {
             url: '/TradeOffM',
@@ -96,7 +91,8 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
         .state('AddCoordinator', {
             url: '/AddCoordinator',
             templateUrl: 'Views/Manager/AddCoordinator.html',
-            parent:'HomeManager'
+            parent:'HomeManager',
+
         })
         .state('AddDomain', {
             url: '/AddDomain',
@@ -144,12 +140,6 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
             controller: 'LogoutCtrl'
         })
 
-        .state('users', {
-            url: '/users',
-            templateUrl: 'templates/users.html',
-            controller: 'UsersCtrl'
-        })
-
 
         .state('HomeCoordinator', {
             url: '/HomeCoordinator',
@@ -158,6 +148,7 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
         .state('HomeCoordinator.DashboardC', {
             url: '/DashboardC',
             templateUrl: 'Views/Coordinator/Dashboard.html',
+            controller: 'DashboardM'
 
         })
         .state('HomeCoordinator.ProjectC', {
@@ -165,21 +156,16 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
             templateUrl: 'Views/Coordinator/Project.html',
             controller: 'ProjectCCtrl'
         })
-        .state('HomeCoordinator.ListEngineerC', {
-            url: '/ListEngineerC',
-            templateUrl: 'Views/Coordinator/ListEngineers.html'
-        })
-        .state('HomeCoordinator.ListPartitionC', {
-            url: '/ListPartitionsC',
-            templateUrl: 'Views/Coordinator/ListPartitions.html'
-        })
+
         .state('HomeCoordinator.ListStudieC', {
             url: '/ListStudieC',
-            templateUrl: 'Views/Coordinator/ListStudies.html'
+            templateUrl: 'Views/Coordinator/ListStudies.html',
+            controller:'StudieCCtrl'
         })
         .state('HomeCoordinator.PartitionC', {
             url: '/PartitionC',
             templateUrl: 'Views/Coordinator/Partition.html',
+            controller:'PartitionCCtrl'
 
         })
         .state('HomeCoordinator.PartitionCManag', {
@@ -192,12 +178,12 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
         .state('HomeCoordinator.EngineerC', {
             url: '/EngineerC',
             templateUrl: 'Views/Coordinator/Engineer.html',
-            controller: 'EngineerMCtrl'
+            controller: 'EngineerCCtrl'
         })
         .state('HomeCoordinator.TeamC', {
             url: '/TeamC',
             templateUrl: 'Views/Coordinator/Team.html',
-            controller: 'TeamMCtrl'
+            controller: 'TeamCCtrl'
         })
         .state('NewVariableC', {
             url: '/NewVariableC',
@@ -211,7 +197,8 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
 
         .state('HomeEngineer.DashboardE', {
             url: '/DashboardE',
-            templateUrl: 'Views/Engineer/Dashboard.html'
+            templateUrl: 'Views/Engineer/Dashboard.html',
+            controller: 'DashboardECtrl'
 
         })
         .state('HomeEngineer.PartitionE', {
@@ -227,21 +214,12 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
 
 
         })
-        .state('NewVariableE', {
-            url: '/NewVariableE',
-            templateUrl: 'Views/Engineer/NewVariable.html',
+        .state('updateVariableE', {
+            url: '/updateVariableE',
+            templateUrl: 'Views/Engineer/Send.html',
             parent:'HomeEngineer'
         })
-        .state('NewConstraintE', {
-            url: '/NewConstraintM',
-            templateUrl: 'Views/Engineer/NewConstraint.html',
-            parent:'HomeEngineer'
-        })
-        .state('NewObjectiveE', {
-            url: '/NewObjectiveE',
-            templateUrl: 'Views/Engineer/NewObjective.html',
-            parent:'HomeEngineer'
-        })
+
 	.state('profile', {
             url: '/profile',
             templateUrl: 'templates/myprofile.html',

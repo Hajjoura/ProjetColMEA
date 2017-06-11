@@ -50,18 +50,23 @@
                                      <th>Team </th>
                                      <th>Start Date</th>
                                      <th>End Date</th>
+                                     <th> </th>
+
                                  </tr>
                                  </thead>
                                  <tbody>
                                  <tr class="" ng-repeat="p in projects">
                                      <td> {{ p.id_project}} </td>
-                                     <td> {{p.id_name}} </td>
+                                     <td> {{p.name}} </td>
                                      <td> {{ p.version}} </td>
                                      <td> {{ p.state}} </td>
                                      <td> - </td>
                                      <td> - </td>
                                      <td class="center"> {{p.start_date}} </td>
                                      <td class="center"> {{p.end_date}} </td>
+                                     <td class="center">
+                                         <a href="#" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-align-justify"></span> Detail</a>
+                                     </td>
                                  </tr>
                                  </tbody>
                              </table>
