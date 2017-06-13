@@ -55,7 +55,6 @@
                                     <thead>
                                     <tr role="row">
                                         <th>#</th>
-                                        <th>Type</th>
                                         <th>Name</th>
                                         <th> Partitions </th>
                                         <th>[</th>
@@ -63,34 +62,33 @@
                                         <th> Set </th>
                                         <th>Min_res </th>
                                         <th>Max_res</th>
-                                        <th> Set_res </th>
                                         <th>Unit</th>
                                         <th>Is Shared</th>
-                                        <th> Date </th>
-                                        <th> A.Tools </th>
                                         <th> Description </th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr class="" ng-repeat="v in variables">
                                         <td> {{ v.id_variable}} </td>
-                                        <td> - </td>
                                         <td> {{v.name}}</td>
                                         <td><select multiple class="form-control">
-                                            <option>List of Partitions</option>
+
+                                            <option ng-repeat="p in partitions">
+                                                {{p.name}}
+
+                                            </option>
                                         </select></td>
-                                        <td> - </td>
-                                        <td> - </td>
-                                        <td> - </td>
+                                        <td> {{intervals.min}}</td>
+                                        <td> {{intervals.max}} </td>
+
                                         <td><select multiple class="form-control">
-                                            <option>List of Set</option>
+                                            <option ng-repeat="s in sets">
+                                                {{s.value}}</option>
                                         </select></td>
                                         <td> {{v.min_res}} </td>
                                         <td> {{v.max_res}} </td>
-                                        <td> - </td>
                                         <td> {{v.unit}} </td>
-                                        <td> {{ v.date}} </td>
-                                        <td> - </td>
+                                        <td> {{v.visibility}} </td>
                                         <td> {{v.description}} </td>
                                     </tr>
                                     </tbody>

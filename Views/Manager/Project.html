@@ -55,18 +55,22 @@
                                  </tr>
                                  </thead>
                                  <tbody>
-                                 <tr class="" ng-repeat="p in projects">
-                                     <td> {{ p.id_project}} </td>
-                                     <td> {{p.name}} </td>
-                                     <td> {{ p.version}} </td>
-                                     <td> {{ p.state}} </td>
+                                 <tr class="" ng-repeat="project in projects">
+                                     <td> {{ project.id_project}} </td>
+                                     <td> {{project.name}} </td>
+                                     <td> {{ project.version}} </td>
+                                     <td> {{ project.state}} </td>
                                      <td> - </td>
                                      <td> - </td>
-                                     <td class="center"> {{p.start_date}} </td>
-                                     <td class="center"> {{p.end_date}} </td>
+                                     <td class="center"> {{project.start_date}} </td>
+                                     <td class="center"> {{project.end_date}} </td>
                                      <td class="center">
-                                         <a href="#" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-align-justify"></span> Detail</a>
-                                     </td>
+                                         <p>
+
+                                         <button ng-click="editProject(project)" type="button" class="btn btn-default btn-circle btn-sm"><i class="fa fa-edit"></i> </button>
+                                         <button type="button" ng-click="deleteProject(project.id_project)" class="btn btn-default btn-circle btn-sm"><i class="fa fa-trash-o"></i> </button>
+                                         </p>
+                                    </td>
                                  </tr>
                                  </tbody>
                              </table>
@@ -89,11 +93,10 @@
                      </div>
                      <div class="row">
                          <div class="col-sm-12">
-                             <p> <a ui-sref="NewProject ">
-                                 <button type="button" class="btn btn-default btn-circle btn-lg"> <i class="fa fa-plus"></i> </button>
-                             </a>
-                                 <button type="button" class="btn btn-default btn-circle btn-lg"><i class="fa fa-edit"></i> </button>
-                                 <button type="button" class="btn btn-default btn-circle btn-lg"><i class="fa fa-trash-o"></i> </button>
+                             <p>
+                                 <button type="button" ui-sref="NewProject "class="btn btn-default btn-circle btn-lg"> <i class="fa fa-plus"></i> </button>
+
+
                              </p>
                          </div>
                      </div>

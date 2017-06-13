@@ -122,6 +122,12 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
         .state('NewProject', {
             url: '/NewProject',
             templateUrl: 'Views/Manager/NewProject.html',
+            parent:'HomeManager',
+            controller:'ProjectMCtrl'
+        })
+        .state('EditProject', {
+            url: '/EditProject',
+            templateUrl: 'Views/Manager/EditProject.html',
             parent:'HomeManager'
         })
         .state('NewStudy', {
@@ -210,7 +216,8 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
         .state('HomeEngineer.PartitionEManag', {
             url: '/PartitionEManag',
             templateUrl: 'Views/Engineer/PartitionManagement.html',
-            parent:'HomeEngineer'
+            parent:'HomeEngineer',
+            controller:'PartitionEManagCtrl'
 
 
         })

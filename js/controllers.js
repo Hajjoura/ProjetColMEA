@@ -72,7 +72,8 @@ angular.module('ColMEA.controllers', [])
 
         });
     })
-    .controller('ProjectMCtrl', function($scope, $http, localStorageService) {
+    .controller('ProjectMCtrl', function($scope, $http, localStorageService,$state,$window) {
+        $scope.id=localStorageService.get("id_user");
         $http({
             method: 'GET',
             url: $scope.endpoint + 'Projects'
@@ -85,14 +86,60 @@ angular.module('ColMEA.controllers', [])
             $scope.project = project;
             $http({
                 method: 'POST',
+                url: $scope.endpoint + 'Projects/addProject/'+$scope.id,
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.project
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.ProjectM',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check project details!");
+            });
+        };
+        $scope.editProject = function(project){
+
+            $state.go('EditProject',{}, {reload: true});
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + 'Projects/findProject'+project.id_project
+            }).then(function successCallback(response) {
+                $scope.project = response.data;
+            }, function errorCallback(response) {
+
+            });
+        };
+        $scope.deleteProject = function(id){
+        var res = confirm("Are you sure?")
+            if (res == true){
+                $http({
+                    method: 'DELETE',
+                    url: $scope.endpoint + 'Projects/DeleteProject/'+id,
+
+                }).then(function successCallback(response) {
+                    $state.go('HomeManager.ProjectM',{}, {reload: true});
+                }, function errorCallback(response) {
+                    $state.go('HomeManager.ProjectM',{}, {reload: true});
+                });
+            }
+
+        };
+        $scope.updateProject = function(project){
+            $scope.projet.id_project = localStorageService.get("id_project");
+            $scope.projet.name = localStorageService.get("name");
+            $scope.projet.version=localStorageService.get("version");
+            $scope.projet.start_date =localStorageService.get("start_date");
+            $scope.projet.end_date=localStorageService.get("end_date");
+            $scope.projet.state=localStorageService.get("state");
+            $http({
+                method: 'PUT',
                 url: $scope.endpoint + 'Projects',
                 headers: {'Content-Type': 'application/json'},
                 data: $scope.project
             }).then(function successCallback(response) {
-                $state.go('HomeManager.ProjectM');
+                $state.go('HomeManager.ProjectM',{}, {reload: true});
             }, function errorCallback(response) {
-                $state.go('HomeManager.ProjectM');
+                $state.go('HomeManager.ProjectM',{}, {reload: true});
             });
+
         };
     })
     .controller('PartitionMCtrl', function($scope, $http, localStorageService) {
@@ -115,22 +162,86 @@ angular.module('ColMEA.controllers', [])
 
         });
     })
-    .controller('PartitionManagCtrl', function($scope, $http, localStorageService) {
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'Variables'
-        }).then(function successCallback(response) {
-            $scope.variables = response.data;
-        }, function errorCallback(response) {
+    .controller('PartitionManagCtrl', function($scope, $http, localStorageService,$window) {
+        $scope.part =[];
+        $scope.Sets =[];
+           $http({
+               method: 'GET',
+               url: $scope.endpoint + 'Variables'
+           }).then(function successCallback(response) {
 
-        });
+               $scope.variables = response.data;
+               for (var i = 0; i <= $scope.variables.length; i++)  {
+                   console.log($scope.variables[i])
+                   $http({
+                       method: 'GET',
+                       url: $scope.endpoint + 'Partitions/findPartitionsByVariable/'+ $scope.variables[i].id_variable
+                   }).then(function successCallback(responsedata) {
+                       $scope.partitions = responsedata.data;
+
+                   }, function errorCallback(responsedata) {
+
+                   });
+
+                   $http({
+                       method: 'GET',
+                       url: $scope.endpoint + 'Variables/findSetsByVariable/'+ $scope.variables[i].id_variable
+                   }).then(function successCallback(responsedataa) {
+                       $scope.sets = responsedataa.data;
+                       for (var j = 0; j <= $scope.sets.length; j++)
+                       {
+                           if ($scope.sets[j].value == null){
+                               $http({
+                                   method: 'GET',
+                                   url: $scope.endpoint + 'Sets/findIntervalsBySet/'+ $scope.sets[j].id_set
+                               }).then(function successCallback(responsedata) {
+                                   $scope.intervals = responsedata.data;
+
+                               }, function errorCallback(responsedata) {
+
+                               });
+                           }
+                       }
+                           }, function errorCallback(responsedataa) {
+
+                   });
+               }
+        }), function errorCallback(response) {
+
+           };
     })
-    .controller('StudieMCtrl', function($scope, $http, localStorageService) {
+
+
+
+    .controller('StudieMCtrl', function($scope, $http, localStorageService,$state) {
+        $scope.id=localStorageService.get("id_user");
         $http({
             method: 'GET',
             url: $scope.endpoint + 'Studies'
         }).then(function successCallback(response) {
             $scope.studies = response.data;
+        }, function errorCallback(response) {
+
+        });
+        $scope.addStudie = function(study){
+            $scope.study = study;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Studies',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.study
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.ListStudieM',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check project details!");
+            });
+        };
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Projects'
+        }).then(function successCallback(response) {
+            $scope.projects = response.data;
         }, function errorCallback(response) {
 
         });
@@ -286,6 +397,32 @@ angular.module('ColMEA.controllers', [])
         });
 
 
+    })
+    .controller('PartitionEManagCtrl', function($scope, $http, localStorageService,$window,$state){
+        $scope.id=localStorageService.get("id_user");
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Variables/findVariablesByEngineer/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.variables = response.data;
+        }, function errorCallback(response) {
+
+        });
+        $scope.update = function(variables) {
+            $state.go('updateVariableE',{}, {reload: true});
+            $scope.variable =variables;
+        }
+
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Variables/findVariablesByEngineer/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.variables = response.data;
+        }, function errorCallback(response) {
+
+        });
     })
     //************************** Common Controllers ****************************//
 
@@ -450,32 +587,21 @@ angular.module('ColMEA.controllers', [])
 
     ///////////////////
     .controller('ProfileCtrl', function($scope, $http, localStorageService, $state, $window) {
-        $scope.ed =[];
-        $scope.ex = [];
+        $scope.first_name=localStorageService.get("first_name");
+        $scope.last_name=localStorageService.get("last_name");
         $http({
             method: 'GET',
-            url: $scope.endpoint + 'users/profile?token='+$scope.token,
+            url: $scope.endpoint + "Users/findByName/"+ $scope.first_name+"/"+$scope.last_name,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function successCallback(response) {
-            $scope.work = response.data.work;
-            $scope.place = response.data.place;
-            $scope.username = response.data.username;
-            $scope.id = response.data._id;
-            for(var i = 0; i<3; i++){
-                if(response.data.education[i] == undefined){
-                    $scope.ed[i] = {date_start: '', date_end: '', place: '', desciption: ''};
-                }else{
-                    $scope.ed[i] = response.data.education[i];
-                }
-                if(response.data.experience[i] == undefined){
-                    $scope.ex[i] = {date_start: '', date_end: '', place: '', desciption: ''};
-                }else{
-                    $scope.ex[i] = response.data.experience[i];
-                }
-            }
-        }, function errorCallback(response) {
 
+            $scope.user = response.data;
+        }, function errorCallback(response) {
         });
-    })
+
+            $scope.date = new Date();
+
+            })
     ////////////////////
 
     //pause
