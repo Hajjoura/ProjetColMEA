@@ -2,7 +2,8 @@
 
 <h1 class="page-header">Partition Management</h1>
 
-<div class="row" ng-controller="PartitionManagCtrl">
+<div class="row" >
+<!--<div class="row" ng-controller="PartitionManagCtrl">-->
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading"> List of Variables | Constraints | Objectives
@@ -68,23 +69,27 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+
                                     <tr class="" ng-repeat="v in variables">
                                         <td> {{ v.id_variable}} </td>
                                         <td> {{v.name}}</td>
-                                        <td><select multiple class="form-control">
+                                        <td>
+                                            <!--<select multiple class="form-control">-->
 
-                                            <option ng-repeat="p in partitions">
-                                                {{p.name}}
+                                            <span ng-repeat="p in part" value="{{p.name}}">
 
-                                            </option>
-                                        </select></td>
+                                                <span ng-repeat="subp in p">{{subp.name}}</span>
+
+                                            </span>
+                                       <!-- </select>-->
+                                        </td>
                                         <td> {{intervals.min}}</td>
                                         <td> {{intervals.max}} </td>
-
-                                        <td><select multiple class="form-control">
-                                            <option ng-repeat="s in sets">
-                                                {{s.value}}</option>
-                                        </select></td>
+                                        {
+                                        <td><span  ng-repeat="s in sets">
+                                                {{s.value}}
+                                        </span>
+                                        </td>
                                         <td> {{v.min_res}} </td>
                                         <td> {{v.max_res}} </td>
                                         <td> {{v.unit}} </td>

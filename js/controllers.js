@@ -169,15 +169,20 @@ angular.module('ColMEA.controllers', [])
                method: 'GET',
                url: $scope.endpoint + 'Variables'
            }).then(function successCallback(response) {
-
+              console.log(response);
                $scope.variables = response.data;
-               for (var i = 0; i <= $scope.variables.length; i++)  {
-                   console.log($scope.variables[i])
+               for (var i = 0; i <= response.data.length; i++)  {
+                   // alert(response.data[i].id_variable)
+                   var id = response.data[i].id_variable;
                    $http({
                        method: 'GET',
-                       url: $scope.endpoint + 'Partitions/findPartitionsByVariable/'+ $scope.variables[i].id_variable
+                       url: $scope.endpoint + 'Partitions/findPartitionsByVariable/'+ id
                    }).then(function successCallback(responsedata) {
-                       $scope.partitions = responsedata.data;
+
+                           $scope.part.push(responsedata.data);
+                           console.log($scope.part)
+                           //$scope.partitions = responsedata.data;
+
 
                    }, function errorCallback(responsedata) {
 
@@ -185,21 +190,26 @@ angular.module('ColMEA.controllers', [])
 
                    $http({
                        method: 'GET',
-                       url: $scope.endpoint + 'Variables/findSetsByVariable/'+ $scope.variables[i].id_variable
+                       url: $scope.endpoint + 'Variables/displayVariableWithSets/'+ id
                    }).then(function successCallback(responsedataa) {
-                       $scope.sets = responsedataa.data;
-                       for (var j = 0; j <= $scope.sets.length; j++)
+                       $scope.Sets.push( responsedataa.data);
+                       for (var j = 0; j <= $scope.Sets.length; j++)
                        {
-                           if ($scope.sets[j].value == null){
-                               $http({
-                                   method: 'GET',
-                                   url: $scope.endpoint + 'Sets/findIntervalsBySet/'+ $scope.sets[j].id_set
-                               }).then(function successCallback(responsedata) {
-                                   $scope.intervals = responsedata.data;
+                           var tab = $scope.Sets[j]
+                           for(var m = 0; m>$scope.Sets[j].length; m++)
+                           {
 
-                               }, function errorCallback(responsedata) {
+                               if (tab[m] == null){
+                                   $http({
+                                       method: 'GET',
+                                       url: $scope.endpoint + 'Sets/findIntervalsBySet/'+ tab[m].id_set
+                                   }).then(function successCallback(responsedata2) {
+                                       $scope.intervals = responsedata2.data;
 
-                               });
+                                   }, function errorCallback(responsedata) {
+
+                                   });
+                               }
                            }
                        }
                            }, function errorCallback(responsedataa) {
