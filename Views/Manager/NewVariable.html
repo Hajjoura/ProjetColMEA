@@ -1,61 +1,51 @@
-
-        <div class="row">
+<h1 class="page-header">Add Variables | Constraints|Objectives</h1>
+        <div class="row" ng-controller="NewVariableCtrl">
             <div class="col-lg-12">
-                <div class="login-panel panel panel-default">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">New Variable </h3>
                     </div>
                     <div class="panel-body">
                         <form role="form">
                             <fieldset>
-                                <div class="form-group">
-                                    <label for="enabledSelect">Please Select Type</label>
-                                    <select id="enabledSelect" class="form-control">
-                                        <option> Variable </option>
-                                        <option> Constraint </option>
-                                        <option> Objective </option>
-                                    </select>
-                                </div>
+
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" placeholder="Enter Number" id="namevarible">
+                                    <input class="form-control" placeholder="Enter Number" id="namevarible" ng-model="variable.name">
                                 </div>
-                                <div class="form-group">
-                                    <label>Interval</label>
-                                    <input class="form-control" placeholder="Enter Number" id="minvarible">
-                                    <input class="form-control" placeholder="Enter Number" id="maxvarible">
-                                </div>
-                                <div class="form-group">
-                                    <label>Set</label>
-                                    <input class="form-control" placeholder="Enter Single Value" id="maxvarible">
-                                    <input class="form-control" placeholder="Enter Min" id="maxvarible">
-                                    <input class="form-control" placeholder="Enter Max" id="maxvarible">
-                                    <button type="button" class="btn btn-outline btn-primary btn-xs">Add</button>
-                                </div>
+
                                 <div class="form-group">
                                     <label>Unit</label>
-                                    <input class="form-control" placeholder=" " id="unitvarible">
+                                    <input class="form-control" placeholder=" " id="unitvarible"  ng-model="variable.unit">
+                                </div>
+                                <div class="form-group">
+                                    <label>Min</label>
+                                    <input class="form-control" placeholder=" " id="unitvarible"  ng-model="variable.min">
+                                </div>
+                                <div class="form-group">
+                                    <label>Max</label>
+                                    <input class="form-control" placeholder=" " id="unitvarible"  ng-model="variable.max">
                                 </div>
                                 <div class="form-group">
                                     <label for="enabledSelect">Visibility</label>
-                                    <select id="enabledSelect" class="form-control">
-                                        <option> None </option>
-                                        <option> Local </option>
-                                        <option> Shared </option>
+                                    <select id="enabledSelect" class="form-control"  ng-model="variable.visibility">
+                                        <option > None </option>
+                                        <option value="false"> Local </option>
+                                        <option value="true"> Shared </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Date</label>
-                                    <input class="form-control" placeholder=" "  type="date" id="unitvarible">
+                                    <input class="form-control" placeholder=" "  type="date" id="unitvarible"  ng-model="variable.date">
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea class="form-control" rows="3" ng-model="variable.description"></textarea>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a ui-sref="HomeManager.PartitionManag" class="btn btn-lg btn-primary btn-block">Add Variable</a>
-                                <a ui-sref="HomeManager.PartitionManag" class="btn btn-lg btn-success btn-block">Add Constraint</a>
-                                <a ui-sref="HomeManager.PartitionManag" class="btn btn-lg btn-warning btn-block">Add Objective</a>
+                                <a ng-click="addVariable(variable)" class="btn btn-lg btn-primary btn-block">Add Variable</a>
+                                <a ng-click="addConstraint(variable)" class="btn btn-lg btn-success btn-block">Add Constraint</a>
+                                <a ng-click="addObjective(variable)" class="btn btn-lg btn-warning btn-block">Add Objective</a>
                             </fieldset>
                         </form>
                     </div>

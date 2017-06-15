@@ -58,54 +58,72 @@
                                             <tr role="row">
                                                 <th>#</th>
                                                 <th>Name</th>
-                                                <th>[</th>
-                                                <th>] </th>
-                                                <th> Set </th>
+                                                <th>Min</th>
+                                                <th>Max</th>
                                                 <th>Min_res </th>
                                                 <th>Max_res</th>
                                                 <th>Unit</th>
                                                 <th>Is Shared</th>
                                                 <th> Description </th>
+                                                <th></th>
                                             </tr>
                                             </thead>
+
                                             <tbody>
                                             <tr class="" ng-repeat="v in variables">
                                                 <td> {{ v.id_variable}} </td>
                                                 <td> {{v.name}}</td>
 
-                                                </select></td>
-                                                <td> -</td>
-                                                <td>- </td>
+                                                <td>
+                                                 {{v.min}}
+                                                </td>
+                                                <td>
+                                                    {{v.max}}
+                                                </td>
 
-                                                <td><select multiple class="form-control">
-                                                    <option >
-                                                        sets</option>
-                                                </select></td>
                                                 <td> {{v.min_res}} </td>
                                                 <td> {{v.max_res}} </td>
                                                 <td> {{v.unit}} </td>
                                                 <td> {{v.visibility}} </td>
                                                 <td> {{v.description}} </td>
+                                                <td class="center">
+                                                    <button ng-click="displaySets(v.id_variable)" data-toggle="modal" data-target="#detail" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-align-justify"></span> Detail</button>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
-                                            <ul class="pagination">
-                                                <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"> <a href="#">Previous</a> </li>
-                                                <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"> <a href="#">1</a> </li>
-                                                <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"> <a href="#">2</a> </li>
-                                                <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"> <a href="#">3</a> </li>
-                                                <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"> <a href="#">4</a> </li>
-                                                <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"> <a href="#">5</a> </li>
-                                                <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"> <a href="#">Next</a> </li>
-                                            </ul>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header modal-header-primary">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                <h1> Variable Details</h1>
+                                            </div>
+                                            <div class="modal-body">
+
+
+                                                <div class="well" ng-repeat="s in sets">
+                                                   {{s.value}}
+                                                </div>
+                                                <div class="well" ng-repeat="i in intervals">
+                                                   [{{i.min}} .. {{i.max}}  ]
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+
+                                            </div>
+
+
                                         </div>
                                     </div>
-                                </div>
+                                    <!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+
                                 <p>
 
                                     <button type="button" ng-click="update(variable)" class="btn btn-primary btn-default btn-lg"  > <i class="fa fa-send">  Update Variable</i> </button>
@@ -125,5 +143,3 @@
             </div>
             <!-- /#page-wrapper -->
         </div>
-    </div>
-</div>

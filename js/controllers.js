@@ -72,6 +72,49 @@ angular.module('ColMEA.controllers', [])
 
         });
     })
+    .controller('NewVariableCtrl', function($scope, $http, localStorageService,$state,$window) {
+        $scope.addVariable = function(variable) {
+            $scope.variable = variable;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Variables',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.PartitionManag',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check variable details!");
+            });
+        };
+        $scope.addConstraint = function(variable) {
+            $scope.variable = variable;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Constraints',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.PartitionManag',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check constraint details!");
+            });
+        };
+        $scope.addObjective = function(variable) {
+            $scope.variable = variable;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Objectives',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.PartitionManag',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check objective details!");
+            });
+        };
+
+
+    })
     .controller('ProjectMCtrl', function($scope, $http, localStorageService,$state,$window) {
         $scope.id=localStorageService.get("id_user");
         $http({
@@ -165,6 +208,7 @@ angular.module('ColMEA.controllers', [])
     .controller('PartitionManagCtrl', function($scope, $http, localStorageService,$window) {
         $scope.part =[];
         $scope.Sets =[];
+        $scope.intervals=[];
            $http({
                method: 'GET',
                url: $scope.endpoint + 'Variables'
@@ -193,32 +237,45 @@ angular.module('ColMEA.controllers', [])
                        url: $scope.endpoint + 'Variables/displayVariableWithSets/'+ id
                    }).then(function successCallback(responsedataa) {
                        $scope.Sets.push( responsedataa.data);
-                       for (var j = 0; j <= $scope.Sets.length; j++)
-                       {
-                           var tab = $scope.Sets[j]
-                           for(var m = 0; m>$scope.Sets[j].length; m++)
-                           {
 
-                               if (tab[m] == null){
-                                   $http({
-                                       method: 'GET',
-                                       url: $scope.endpoint + 'Sets/findIntervalsBySet/'+ tab[m].id_set
-                                   }).then(function successCallback(responsedata2) {
-                                       $scope.intervals = responsedata2.data;
 
-                                   }, function errorCallback(responsedata) {
-
-                                   });
-                               }
-                           }
-                       }
                            }, function errorCallback(responsedataa) {
+
+                   });
+                   $http({
+                       method: 'GET',
+                       url: $scope.endpoint + 'Variables/findVariableWithIntervals/'+ id
+                   }).then(function successCallback(responsedata2) {
+                       $scope.intervals.push( responsedata2.data);
+
+                   }, function errorCallback(responsedata) {
 
                    });
                }
         }), function errorCallback(response) {
 
            };
+        $scope.deleteVariable = function(id){
+            var res = confirm("Are you sure?")
+            if (res == true){
+                $http({
+                    method: 'DELETE',
+                    url: $scope.endpoint + 'Variables/DeleteVariable/'+id,
+
+                }).then(function successCallback(response) {
+                    $state.go('HomeManager.PartitionManag',{}, {reload: true});
+                }, function errorCallback(response) {
+                    $state.go('HomeManager.PartitionManag',{}, {reload: true});
+                });
+            }
+
+        };
+        $scope.editVariable = function(v){
+
+
+            };
+
+
     })
 
 
@@ -408,7 +465,7 @@ angular.module('ColMEA.controllers', [])
 
 
     })
-    .controller('PartitionEManagCtrl', function($scope, $http, localStorageService,$window,$state){
+    .controller('PartitionEManagCtrl', function($scope, $http, localStorageService,$window,$state,$rootScope){
         $scope.id=localStorageService.get("id_user");
 
         $http({
@@ -421,18 +478,90 @@ angular.module('ColMEA.controllers', [])
         });
         $scope.update = function(variables) {
             $state.go('updateVariableE',{}, {reload: true});
-            $scope.variable =variables;
+            $rootScope.vable =variables;
+        };
+
+        $scope.displaySets = function(id){
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + 'Variables/displayVariableWithSets/'+id
+            }).then(function successCallback(response) {
+                $scope.sets = response.data;
+                for (var i = 0; i <= response.data.length; i++) {
+                    // alert(response.data[i].id_variable)
+                    var id = response.data[i].id_set;
+                    if ($scope.sets[i].value == null) {
+                        $http({
+                            method: 'GET',
+                            url: $scope.endpoint + 'Sets/findIntervalsBySet/' + id
+                        }).then(function successCallback(response) {
+                            $scope.intervals = response.data;
+                        }, function errorCallback(response) {
+
+                        })
+
+                    }
+                }
+            }, function errorCallback(response) {
+
+            })
+
+        };
+        $scope.updateVariable = function(variable) {
+
+            $http({
+                method: 'PUT',
+                url: $scope.endpoint + 'Variables',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $state.go('updateVariableE',{}, {reload: true});
+            }, function errorCallback(response) {
+
+            });
+
+        };
+        $scope.updateVariable = function(variable) {
+            $scope.variable =variable;
+            $http({
+                method: 'PUT',
+                url: $scope.endpoint + 'Variables',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $state.go('updateVariableE',{}, {reload: true});
+            }, function errorCallback(response) {
+
+            });
+
+        };
+        $scope.addSet = function(set,id) {
+            $scope.set = set;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Sets/addSet'+id,
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.set
+            }).then(function successCallback(response) {
+                $state.go('updateVariableE',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check set details!");
+            });
+        }
+        $scope.addInterval = function(interval) {
+            $scope.interval = interval;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Sets/addInterval',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.interval
+            }).then(function successCallback(response) {
+                $state.go('updateVariableE',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check interval details!");
+            });
         }
 
-
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'Variables/findVariablesByEngineer/'+$scope.id
-        }).then(function successCallback(response) {
-            $scope.variables = response.data;
-        }, function errorCallback(response) {
-
-        });
     })
     //************************** Common Controllers ****************************//
 

@@ -66,6 +66,7 @@
                                         <th>Unit</th>
                                         <th>Is Shared</th>
                                         <th> Description </th>
+                                        <th> </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -83,11 +84,25 @@
                                             </span>
                                        <!-- </select>-->
                                         </td>
-                                        <td> {{intervals.min}}</td>
-                                        <td> {{intervals.max}} </td>
-                                        {
-                                        <td><span  ng-repeat="s in sets">
-                                                {{s.value}}
+                                        <td>
+                                            <span  ng-repeat="i in intervals">
+                                             <span  ng-repeat="subi in i">
+                                                 <span  ng-repeat="subisub in subi">
+                                                     {{subisub.min}}
+                                                 </span>
+                                             </span>
+                                            </span>
+                                        </td>
+                                        <td>  <span  ng-repeat="i in intervals">
+                                             <span  ng-repeat="subi in i">
+                                                 <span  ng-repeat="subisub in subi">
+                                                     {{subisub.max}}
+                                                 </span>
+                                             </span>
+                                            </span>
+                                        <td><span  ng-repeat="s in Sets">
+                                                <span ng-repeat="subs in s">{{subs.value}}</span>
+
                                         </span>
                                         </td>
                                         <td> {{v.min_res}} </td>
@@ -95,6 +110,13 @@
                                         <td> {{v.unit}} </td>
                                         <td> {{v.visibility}} </td>
                                         <td> {{v.description}} </td>
+                                        <td class="center">
+                                            <p>
+
+                                                <button ng-click="editVariable(v)" type="button" class="btn btn-default btn-circle btn-sm"><i class="fa fa-edit"></i> </button>
+                                                <button type="button" ng-click="deleteVariable(v.id_variable)" class="btn btn-default btn-circle btn-sm"><i class="fa fa-trash-o"></i> </button>
+                                            </p>
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -120,8 +142,7 @@
                                 <p> <a ui-sref="NewVariable">
                                     <button type="button" class="btn btn-default btn-circle btn-lg"> <i class="fa fa-plus"></i> </button>
                                 </a>
-                                    <button type="button" class="btn btn-default btn-circle btn-lg"><i class="fa fa-edit"></i> </button>
-                                    <button type="button" class="btn btn-default btn-circle btn-lg"><i class="fa fa-trash-o"></i> </button>
+
                                 </p>
                             </div>
                         </div>

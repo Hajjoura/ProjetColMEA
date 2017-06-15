@@ -64,21 +64,22 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="" ng-repeat="v in variables">
-                      <td> {{v.id_variable}} </td>
-                      <td> {{v.name}}</td>
+
+                    <tr class="" ng-repeat="variable in variables">
+                      <td> {{variable.id_variable}} </td>
+                      <td> {{variable.name}}</td>
 
                       <td> <input class="form-control-static" ng-model="variable.min" placeholder="Enter Min" id="nameproject"> </td>
                       <td> <input class="form-control-static" ng-model="variable.max" placeholder="Enter Max" id="nameproject"> </td>
                       <td> 
-                      	<input class="form-control-static" ng-model="variable.set" placeholder="Enter Set" id="nameproject">
+                      	<input class="form-control-static" ng-model="set.value" placeholder="Enter Set" id="nameproject">
                         <button href="#" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#addSet">
                           <span class="glyphicon glyphicon-plus-sign"></span> </button>
-                      	<button  type="button" class="btn btn-outline btn-primary btn-xs">Add</button>
+                      	<button  type="button" ng-click="addSet(set,this.id_variable)"class="btn btn-outline btn-primary btn-xs">Add</button>
                       </td>
                     <td>
                       <p>
-                        <button type="button" class="btn btn-warning btn-circle btn-sm"  > <i class="fa fa-send">   </i> </button>
+                        <button type="button" ng-click="updateVariable(this.variable)" class="btn btn-warning btn-circle btn-sm"  > <i class="fa fa-send">   </i> </button>
                       </p>
                     </td>
 
@@ -101,20 +102,20 @@
 
 
                       <div class="well">
-                        <form id="loginForm" method="POST"  novalidate="novalidate">
+                        <form id="loginForm" >
                           <div class="form-group">
                             <label for="min" class="control-label">Min</label>
-                            <input type="text" class="form-control" ng-model="variable.interMin" id="min" name="min" value="" required="" title="Please enter a Minimum Value">
+                            <input type="text" class="form-control" ng-model="interval.min" id="min" name="min" value="" required="" title="Please enter a Minimum Value">
                             <span class="help-block"></span>
                           </div>
                           <div class="form-group">
                             <label for="max" class="control-label">Max</label>
-                            <input type="password" class="form-control" ng-model="variable.interMax" id="max" name="max" value="" required="" title="Please enter a Maximum Value">
+                            <input type="text" class="form-control" ng-model="interval.max" id="max" name="max" value="" required="" title="Please enter a Maximum Value">
                             <span class="help-block"></span>
                           </div>
                           <div class="center">
 
-                          <button type="submit" class="btn btn-success btn-block">Validate</button>
+                          <button type="submit" ng-click="addInterval(interval)" class="btn btn-success btn-block">Validate</button>
                           </div>
 
                         </form>
