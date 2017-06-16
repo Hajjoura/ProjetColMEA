@@ -1,7 +1,8 @@
+<h1 class="page-header">Partition Management</h1>
 
-        <div class="row">
+<div class="row" ng-controller="PartitionMCtrl">
             <div class="col-lg-12">
-                <div class="login-panel panel panel-default">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">New Partition </h3>
                     </div>
@@ -11,26 +12,30 @@
                                 <div class="form-group">
                                 	<label for="enabledSelect">Please Select Project</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option> List of Projects</option>
+                                    	<option ng-repeat="s in Studies">
+                                            {{s.project.name}}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                 	<label for="enabledSelect">Please Select Study</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option> List of Studies</option>
+                                        <option ng-repeat="s in Studies">
+                                            {{s.type}}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" placeholder="Enter Name" id="namepartition">
+                                    <input ng-model="partition.name" class="form-control" placeholder="Enter Name" id="namepartition">
                                 </div>
                                 <div class="form-group">
                                     <label>Description</label>
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea ng-model="partition.description" class="form-control" rows="3"></textarea>
                                 </div>
 
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a ui-sref="HomeManager.ListPartitionM" class="btn btn-lg btn-success btn-block" > Save Partition</a>
+                                <a ng-click="addPartition(partition)" class="btn btn-lg btn-success btn-block" > Save Partition</a>
                             </fieldset>
                         </form>
                     </div>

@@ -58,12 +58,12 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
 
         .state('HomeManager.PartitionM', {
             url: '/PartitionM',
-            templateUrl: 'Views/Manager/Partition.html',
+            templateUrl: 'Views/Manager/ListPartitions.html',
             controller: 'PartitionMCtrl'
         })
         .state('HomeManager.PartitionManag', {
             url: '/PartitionManag',
-            templateUrl: 'Views/Manager/PartitionManagement.html',
+            templateUrl: 'Views/Manager/PartitionDetail.html',
             parent:'HomeManager',
             controller: 'PartitionManagCtrl'
 
@@ -176,8 +176,8 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
         })
         .state('HomeCoordinator.PartitionCManag', {
             url: '/PartitionCManag',
-            templateUrl: 'Views/Coordinator/PartitionManagement.html',
-            controller: 'PartitionMCtrl',
+            templateUrl: 'Views/Coordinator/PartitionDetail.html',
+            controller: 'PartitionManagCCtrl',
             parent:'HomeCoordinator'
         })
 

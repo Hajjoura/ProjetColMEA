@@ -69,17 +69,17 @@
                       <td> {{variable.id_variable}} </td>
                       <td> {{variable.name}}</td>
 
-                      <td> <input class="form-control-static" ng-model="variable.min" placeholder="Enter Min" id="nameproject"> </td>
-                      <td> <input class="form-control-static" ng-model="variable.max" placeholder="Enter Max" id="nameproject"> </td>
+                      <td> <input class="form-control-static" ng-model="min" placeholder="Enter Min" id="nameproject"> </td>
+                      <td> <input class="form-control-static" ng-model="max" placeholder="Enter Max" id="nameproject"> </td>
                       <td> 
                       	<input class="form-control-static" ng-model="set.value" placeholder="Enter Set" id="nameproject">
                         <button href="#" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#addSet">
                           <span class="glyphicon glyphicon-plus-sign"></span> </button>
-                      	<button  type="button" ng-click="addSet(set,this.id_variable)"class="btn btn-outline btn-primary btn-xs">Add</button>
+                      	<button  type="button" ng-click="addSet(set,variable.id_variable)"class="btn btn-outline btn-primary btn-xs">Add</button>
                       </td>
                     <td>
                       <p>
-                        <button type="button" ng-click="updateVariable(this.variable)" class="btn btn-warning btn-circle btn-sm"  > <i class="fa fa-send">   </i> </button>
+                        <button type="button" ng-click="updateVariable(this.variable,min,max)" class="btn btn-warning btn-circle btn-sm"  > <i class="fa fa-send">   </i> </button>
                       </p>
                     </td>
 
