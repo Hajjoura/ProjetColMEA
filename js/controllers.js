@@ -115,7 +115,7 @@ angular.module('ColMEA.controllers', [])
 
 
     })
-    .controller('ProjectMCtrl', function($scope, $http, localStorageService,$state,$window) {
+    .controller('ProjectMCtrl', function($scope, $http, localStorageService,$state,$window,$rootscope) {
         $scope.id=localStorageService.get("id_user");
         $http({
             method: 'GET',
@@ -145,7 +145,7 @@ angular.module('ColMEA.controllers', [])
                 method: 'GET',
                 url: $scope.endpoint + 'Projects/findProject'+project.id_project
             }).then(function successCallback(response) {
-                $scope.project = response.data;
+                $rootscope.project = response.data;
             }, function errorCallback(response) {
 
             });
@@ -166,12 +166,8 @@ angular.module('ColMEA.controllers', [])
 
         };
         $scope.updateProject = function(project){
-            $scope.projet.id_project = localStorageService.get("id_project");
-            $scope.projet.name = localStorageService.get("name");
-            $scope.projet.version=localStorageService.get("version");
-            $scope.projet.start_date =localStorageService.get("start_date");
-            $scope.projet.end_date=localStorageService.get("end_date");
-            $scope.projet.state=localStorageService.get("state");
+            $scope.projet=project;
+
             $http({
                 method: 'PUT',
                 url: $scope.endpoint + 'Projects',
@@ -510,7 +506,7 @@ angular.module('ColMEA.controllers', [])
 
         });
     })
-    .controller('PartitionManagCCtrl', function($scope, $http, localStorageService) {
+    .controller('PartitionManagCCtrl', function($scope, $http, localStorageService,$state,$rootScope) {
 
         $scope.id=localStorageService.get("id_user");
         $http({
@@ -522,7 +518,7 @@ angular.module('ColMEA.controllers', [])
 
         });
 
-        $scope.displaySets = function(id){
+        $scope.displayMinMax = function(id){
             $http({
                 method: 'GET',
                 url: $scope.endpoint + 'Partitions/findVariablesPartitionsByIdVable/'+id
@@ -532,6 +528,56 @@ angular.module('ColMEA.controllers', [])
             }, function errorCallback(response) {
 
             })
+
+        };
+        $scope.updateMinMax = function(variables) {
+            $state.go('updateVariableC',{}, {reload: true});
+            $rootScope.vable =variables;
+        };
+    })
+    .controller('updateVariableC', function($scope, $http, localStorageService,$state) {
+
+        $scope.id=localStorageService.get("id_user");
+
+
+        $scope.displaySets = function(id){
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + 'Variables/findSetsByVariable/'+id
+            }).then(function successCallback(response) {
+                $scope.sets = response.data;
+
+            }, function errorCallback(response) {
+
+            })
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + 'Variables/findVariableWithIntervals/'+ id
+             }).then(function successCallback(responsedata2) {
+                  $scope.intervals( responsedata2.data);
+
+            }, function errorCallback(responsedata) {
+
+             });
+
+        };
+        $scope.updateMinMax = function(variables) {
+            $state.go('updateVariableC',{}, {reload: true});
+            $rootScope.vable =variables;
+        };
+        $scope.updateVariable = function(variable){
+            $scope.variable=variable;
+
+            $http({
+                method: 'PUT',
+                url: $scope.endpoint + 'Variables',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $state.go('HomeCoordinator.PartitionCManag',{}, {reload: true});
+            }, function errorCallback(response) {
+                $state.go('HomeCoordinator.PartitionCManag',{}, {reload: true});
+            });
 
         };
     })

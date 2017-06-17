@@ -191,6 +191,12 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
             templateUrl: 'Views/Coordinator/Team.html',
             controller: 'TeamCCtrl'
         })
+        .state('updateVariableC', {
+            url: '/updateVariableC',
+            templateUrl: 'Views/Coordinator/Send.html',
+            parent:'HomeCoordinator',
+            controller:'updateVariableC'
+        })
         .state('NewVariableC', {
             url: '/NewVariableC',
             templateUrl: 'Views/Coordinator/NewVariable.html',

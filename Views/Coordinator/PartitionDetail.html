@@ -75,9 +75,7 @@
                                         <td> {{v.description}} </td>
                                         <td class="center">
                                             <p>
-                                                <button ng-click="displaySets(v.id_variable)" data-toggle="modal" data-target="#detail"class="btn btn-primary btn-circle"><i class="fa fa-list"></i></button>
-                                                <button ng-click="editVariable(v)" type="button" class="btn btn-default btn-circle btn-sm"><i class="fa fa-edit"></i> </button>
-                                                <button type="button" ng-click="deleteVariable(v.id_variable)" class="btn btn-default btn-circle btn-sm"><i class="fa fa-trash-o"></i> </button>
+                                                <button ng-click="displayMinMax(v.id_variable)" data-toggle="modal" data-target="#detail"class="btn btn-primary btn-circle"><i class="fa fa-list"></i></button>
 
                                             </p>
                                         </td>
@@ -86,21 +84,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
-                                    <ul class="pagination">
-                                        <li class="paginate_button previous disabled" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_previous"> <a href="#">Previous</a> </li>
-                                        <li class="paginate_button active" aria-controls="dataTables-example" tabindex="0"> <a href="#">1</a> </li>
-                                        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"> <a href="#">2</a> </li>
-                                        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"> <a href="#">3</a> </li>
-                                        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"> <a href="#">4</a> </li>
-                                        <li class="paginate_button " aria-controls="dataTables-example" tabindex="0"> <a href="#">5</a> </li>
-                                        <li class="paginate_button next" aria-controls="dataTables-example" tabindex="0" id="dataTables-example_next"> <a href="#">Next</a> </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+
                         <!-- Modal -->
                         <div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -129,11 +113,8 @@
                     </div><!-- /.modal -->
                         <div class="row">
                             <div class="col-sm-6">
-                                <p> <a ui-sref="NewVariable">
-                                    <button type="button" class="btn btn-default btn-circle btn-lg"> <i class="fa fa-plus"></i> </button>
-                                </a>
+                                <button type="button" ng-click="updateMinMax(variable)"class="btn btn-info">Update Min Max</button>
 
-                                </p>
                             </div>
                         </div>
                     </div>
