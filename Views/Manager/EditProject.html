@@ -1,8 +1,9 @@
+<h1 class="page-header">Project Management</h1>
 
 
-        <div class="row">
+<div class="row">
             <div class="col-lg-12">
-                <div class="login-panel panel panel-default">
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Update Project</h3>
                     </div>
@@ -11,27 +12,27 @@
                             <fieldset>
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" ng-model="projet.name" placeholder="Enter Name" id="nameproject">
+                                    <input class="form-control" ng-model="project.name" placeholder="Enter Name" id="nameproject">
                                 </div>
                                 <div class="form-group">
                                     <label>Version</label>
-                                    <input class="form-control" ng-model="projet.version" placeholder="Enter Version" id="versionproject">
+                                    <input class="form-control" ng-model="project.version" placeholder="Enter Version" id="versionproject">
                                 </div>
                                 <div class="form-group">
                                     <label>Start Date</label>
-                                    <input class="form-control" ng-model="projet.start_date" id="startdateproject" type="date">
+                                    <input class="form-control" ng-model="project.start_date" id="startdateproject" type="date">
                                 </div>
                                 <div class="form-group">
                                     <label>End Date</label>
-                                    <input class="form-control" ng-model="projet.end_date" id="enddateproject" type="date">
+                                    <input class="form-control" ng-model="project.end_date" id="enddateproject" type="date">
                                 </div>
                                 <div class="form-group">
                                     <label>State</label>
-                                    <input class="form-control" ng-model="projet.state" placeholder="Enter State" id="stateproject">
+                                    <input class="form-control" ng-model="project.state" placeholder="Enter State" id="stateproject">
                                 </div>
                                 
                                 <!-- Change this to a button or input when using this as a form -->
-                                <button type="submit"  ng-click="updateProject(projet)" class="btn btn-lg btn-primary btn-block">Save Project</button>
+                                <button type="submit"  ng-click="updateProject()" class="btn btn-lg btn-primary btn-block">Save Project</button>
                             </fieldset>
                         </form>
                     </div>

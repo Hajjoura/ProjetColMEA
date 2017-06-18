@@ -115,7 +115,7 @@ angular.module('ColMEA.controllers', [])
 
 
     })
-    .controller('ProjectMCtrl', function($scope, $http, localStorageService,$state,$window,$rootscope) {
+    .controller('ProjectMCtrl', function($scope, $http, localStorageService,$state,$window,$rootScope) {
         $scope.id=localStorageService.get("id_user");
         $http({
             method: 'GET',
@@ -165,8 +165,8 @@ angular.module('ColMEA.controllers', [])
             }
 
         };
-        $scope.updateProject = function(project){
-            $scope.projet=project;
+        $scope.updateProject = function(){
+            $scope.projet=$rootscope.project;
 
             $http({
                 method: 'PUT',
