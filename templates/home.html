@@ -1,11 +1,22 @@
 <div class="container" ng-controller="HomeCtrl">
     <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" ui-sref="index">COLMEA</a>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" id="main-navigation">
+                <li>
+                    <a class="navbar-brand pull-left" href="#index">COLMEA</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right" id="main-navigation">
+                <li>
+                    <a class="nav navbar-brand pull-right" href="#about">About</a>
+                </li>
+            </ul>
         </div>
+
     </nav>
+
+
+    </div>
 
     <div class="row" >
         <div class="col-md-4 col-md-offset-4">
@@ -28,9 +39,7 @@
         </div>
     </div>
 
-    <footer>
+    <div style="position: absolute; bottom: 0px;">© 2017 Quartz - Supméca Paris - France</div>
 
-        <p class="copyright">© 2017 Quartz - Supméca Paris - France</p>
-    </footer>
 
 </div>
