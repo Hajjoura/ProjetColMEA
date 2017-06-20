@@ -72,49 +72,7 @@ angular.module('ColMEA.controllers', [])
 
         });
     })
-    .controller('NewVariableCtrl', function($scope, $http, localStorageService,$state,$window) {
-        $scope.addVariable = function(variable) {
-            $scope.variable = variable;
-            $http({
-                method: 'POST',
-                url: $scope.endpoint + 'Variables',
-                headers: {'Content-Type': 'application/json'},
-                data: $scope.variable
-            }).then(function successCallback(response) {
-                $state.go('HomeManager.PartitionManag',{}, {reload: true});
-            }, function errorCallback(response) {
-                $window.alert("Please check variable details!");
-            });
-        };
-        $scope.addConstraint = function(variable) {
-            $scope.variable = variable;
-            $http({
-                method: 'POST',
-                url: $scope.endpoint + 'Constraints',
-                headers: {'Content-Type': 'application/json'},
-                data: $scope.variable
-            }).then(function successCallback(response) {
-                $state.go('HomeManager.PartitionManag',{}, {reload: true});
-            }, function errorCallback(response) {
-                $window.alert("Please check constraint details!");
-            });
-        };
-        $scope.addObjective = function(variable) {
-            $scope.variable = variable;
-            $http({
-                method: 'POST',
-                url: $scope.endpoint + 'Objectives',
-                headers: {'Content-Type': 'application/json'},
-                data: $scope.variable
-            }).then(function successCallback(response) {
-                $state.go('HomeManager.PartitionManag',{}, {reload: true});
-            }, function errorCallback(response) {
-                $window.alert("Please check objective details!");
-            });
-        };
 
-
-    })
     .controller('ProjectMCtrl', function($scope, $http, localStorageService,$state,$window,$rootScope) {
         $scope.id=localStorageService.get("id_user");
         $http({
@@ -194,7 +152,7 @@ angular.module('ColMEA.controllers', [])
         });
         $http({
             method: 'GET',
-            url: $scope.endpoint + 'Partitions/findPartitionsByManager'+$scope.id
+            url: $scope.endpoint + 'Partitions/findPartitionsByManager/'+$scope.id
         }).then(function successCallback(response) {
             $scope.Partitions = response.data;
         }, function errorCallback(response) {
@@ -242,6 +200,103 @@ angular.module('ColMEA.controllers', [])
 
             $state.go('HomeManager.PartitionManag',{}, {reload: true});
         }
+    })
+    .controller('NewVariableCtrl', function($scope, $http, localStorageService,$state,$window) {
+        $scope.name=localStorageService.get("namePart");
+        $scope.idPart=localStorageService.get("idPart");
+
+        $scope.addVariable = function(variable) {
+            $scope.variable = variable;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Variables',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $http({
+                    method: 'GET',
+                    url: $scope.endpoint + "Variables/findLastRow",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function successCallback(responsedata) {
+                    $http({
+                        method: 'POST',
+                        url: $scope.endpoint + 'Variables/addPartition/'+$scope.idPart+'/'+ responsedata.data.id_variable +'/1',
+                        headers: {'Content-Type': 'application/json'}
+                    }).then(function successCallback(responsedataa) {
+
+                    }, function errorCallback(responsedataa) {
+                    });
+
+                }, function errorCallback(responsedata) {
+
+                });
+                $state.go('HomeManager.PartitionManag',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check variable details!");
+            });
+        };
+        $scope.addConstraint = function(variable) {
+            $scope.variable = variable;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Constraints',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $http({
+                    method: 'GET',
+                    url: $scope.endpoint + "Variables/findLastRow",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function successCallback(responsedata) {
+                    $http({
+                        method: 'POST',
+                        url: $scope.endpoint + 'Variables/addPartition/'+$scope.idPart+'/'+ responsedata.data.id_variable +'/1',
+                        headers: {'Content-Type': 'application/json'}
+                    }).then(function successCallback(responsedataa) {
+
+                    }, function errorCallback(responsedataa) {
+                    });
+
+                }, function errorCallback(responsedata) {
+
+                });
+                $state.go('HomeManager.PartitionManag',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check constraint details!");
+            });
+        };
+        $scope.addObjective = function(variable) {
+            $scope.variable = variable;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Objectives',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.variable
+            }).then(function successCallback(response) {
+                $http({
+                    method: 'GET',
+                    url: $scope.endpoint + "Variables/findLastRow",
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(function successCallback(responsedata) {
+                    $http({
+                        method: 'POST',
+                        url: $scope.endpoint + 'Variables/addPartition/'+$scope.idPart+'/'+ responsedata.data.id_variable +'/1',
+                        headers: {'Content-Type': 'application/json'}
+                    }).then(function successCallback(responsedataa) {
+
+                    }, function errorCallback(responsedataa) {
+                    });
+
+                }, function errorCallback(responsedata) {
+
+                });
+                $state.go('HomeManager.PartitionManag',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check objective details!");
+            });
+        };
+
+
     })
     .controller('PartitionManagCtrl', function($scope, $http, localStorageService,$window,$state) {
         $scope.name=localStorageService.get("namePart");
@@ -352,7 +407,9 @@ angular.module('ColMEA.controllers', [])
             }
 
         };
-
+        $scope.NewVariable = function(){
+            $state.go('NewVariable',{}, {reload: true});
+        };
 
 
     })
@@ -382,6 +439,21 @@ angular.module('ColMEA.controllers', [])
                 $window.alert("Please check project details!");
             });
         };
+
+        $scope.duplicate = function(id){
+
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Studies/duplicateStudy/'+id,
+                headers: {'Content-Type': 'application/json'},
+
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.ListStudieM',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check project details!");
+            });
+        };
+
 
         $http({
             method: 'GET',
@@ -822,100 +894,7 @@ angular.module('ColMEA.controllers', [])
     })
 
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-    .controller('UpdateresumeCtrl', function($scope, $http, localStorageService, $state, $window) {
-        $scope.ed =[];
-        $scope.ex = [];
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'users/profile?token='+$scope.token,
-        }).then(function successCallback(response) {
-            $scope.work = response.data.work;
-            $scope.place = response.data.place;
-            $scope.username = response.data.username;
-            $scope.id = response.data._id;
-            for(var i = 0; i<3; i++){
-                if(response.data.education[i] == undefined){
-                    $scope.ed[i] = {date_start: '', date_end: '', place: '', desciption: ''};
-                }else{
-                    $scope.ed[i] = response.data.education[i];
-                }
-                if(response.data.experience[i] == undefined){
-                    $scope.ex[i] = {date_start: '', date_end: '', place: '', desciption: ''};
-                }else{
-                    $scope.ex[i] = response.data.experience[i];
-                }
-            }
-        }, function errorCallback(response) {
-
-        });
-
-        $scope.updateresume = function(){
-            $http({
-                method: 'PUT',
-                url: $scope.endpoint + 'users/updateresume?token='+$scope.token,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                data: 'id='+$scope.id+'&place='+$scope.place + '&work='+$scope.work+'&education='+JSON.stringify($scope.ed) +'&experience='+JSON.stringify($scope.ex)
-            }).then(function successCallback(response) {
-                // $state.go('login', {}, {reload: true});
-            }, function errorCallback(response) {
-
-            });
-
-        };
-    })
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    .controller('SuitableOffersCtrl', function($scope, $http, localStorageService, $state, $window) {
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'users/profile?token='+$scope.token,
-        }).then(function successCallback(response) {
-            $http({
-                method: 'GET',
-                url: $scope.endpoint + 'offers/advancedsearch/'+response.data.work+'?token='+$scope.token
-            }).then(function successCallback(response) {
-                $scope.offers = response.data;
-            }, function errorCallback(response) {
-
-            });
-        }, function errorCallback(response) {
-
-        });
-
-
-    })
-
-    ///////////////////
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    .controller('OffersByplaceCtrl', function($scope, $http, localStorageService, $state, $window) {
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'users/profile?token='+$scope.token,
-        }).then(function successCallback(response) {
-            $http({
-                method: 'GET',
-                url: $scope.endpoint + 'offers/advancedsearch/'+response.data.place+'?token='+$scope.token
-            }).then(function successCallback(response) {
-                $scope.offers = response.data;
-            }, function errorCallback(response) {
-
-            });
-        }, function errorCallback(response) {
-
-        });
-
-
-    })
-
-    ///////////////////
     .controller('ProfileCtrl', function($scope, $http, localStorageService, $state, $window) {
         $scope.first_name=localStorageService.get("first_name");
         $scope.last_name=localStorageService.get("last_name");
@@ -932,70 +911,6 @@ angular.module('ColMEA.controllers', [])
             $scope.date = new Date();
 
             })
-    ////////////////////
 
-    //pause
-    .controller('addoffersCtrl', function($scope, $http, localStorageService, $state, $window) {
-        $scope.addoffers = function(){
-            $http({
-                method: 'POST',
-                url: $scope.endpoint + 'barbechoffers/addoffers?token='+$scope.token,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                data: 'title=' + $scope.title + '&description='+$scope.description + '&company='+$scope.company + '&place='+$scope.place
-            }).then(function successCallback(response) {
-                $state.go('barbechoffers', {}, {reload: true});
-                console.log(response.data);
-            }, function errorCallback(response) {
-
-            });
-        };
-    })
-
-
-    .controller('OffersCtrl', function($scope, $http) {
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'offers?token='+$scope.token
-        }).then(function successCallback(response) {
-            $scope.offers = response.data;
-        }, function errorCallback(response) {
-
-        });
-    })
-    .controller('barbechoffersCtrl', function($scope, $http) {
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'barbechoffers?token='+$scope.token
-        }).then(function successCallback(response) {
-            $scope.barbechoffers = response.data;
-        }, function errorCallback(response) {
-
-        });
-    })
-    .controller('UsersCtrl', function($scope, $http) {
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'users?token='+$scope.token
-        }).then(function successCallback(response) {
-            $scope.users = response.data;
-        }, function errorCallback(response) {
-
-        });
-    })
-    .controller('advancedsearchCtrl', function($scope, $http) {
-        $scope.keywords = 'informatique';
-        $scope.offers = [];
-        $scope.search = function(){
-            $http({
-                method: 'GET',
-                url: $scope.endpoint + 'offers/advancedsearch/'+$scope.keywords+'?token='+$scope.token
-            }).then(function successCallback(response) {
-                $scope.offers = response.data;
-            }, function errorCallback(response) {
-
-            });
-        };
-        $scope.search();
-    })
 
 ;
