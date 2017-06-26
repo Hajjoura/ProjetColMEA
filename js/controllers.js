@@ -101,7 +101,7 @@ angular.module('ColMEA.controllers', [])
             $state.go('EditProject',{}, {reload: true});
             $http({
                 method: 'GET',
-                url: $scope.endpoint + 'Projects/findProject'+project.id_project
+                url: $scope.endpoint + 'Projects/findProject/'+project.id_project
             }).then(function successCallback(response) {
                 $rootscope.project = response.data;
             }, function errorCallback(response) {
@@ -670,31 +670,31 @@ angular.module('ColMEA.controllers', [])
     .controller('DashboardECtrl', function($scope, $http, localStorageService) {
 
         $scope.id=localStorageService.get("id_user");
-        $http({
-            method: 'GET',
-            url: $scope.endpoint + 'Studies/findStudyByEngineer/'+$scope.id
-        }).then(function successCallback(response) {
-            $scope.dash = response.data;
-            $http({
-                method: 'GET',
-                url: $scope.endpoint + 'Coordinators/findCoordinatorByTeam/'+$scope.dash.team.id_team
-            }).then(function successCallback(response) {
-                $scope.coordinator = response.data;
-                $http({
-                    method: 'GET',
-                    url: $scope.endpoint + 'Engineers/findEnginnersByNameTeam/'+$scope.dash.team.name
-                }).then(function successCallback(response) {
-                    $scope.engineers = response.data;
-                }, function errorCallback(response) {
-
-                });
-            }, function errorCallback(response) {
-
-            });
-
-        }, function errorCallback(response) {
-
-        });
+        // $http({
+        //     method: 'GET',
+        //     url: $scope.endpoint + 'Studies/findStudyByEngineer/'+$scope.id
+        // }).then(function successCallback(response) {
+        //     $scope.dash = response.data;
+        //     $http({
+        //         method: 'GET',
+        //         url: $scope.endpoint + 'Coordinators/findCoordinatorByTeam/'+$scope.dash.team.id_team
+        //     }).then(function successCallback(response) {
+        //         $scope.coordinator = response.data;
+        //         $http({
+        //             method: 'GET',
+        //             url: $scope.endpoint + 'Engineers/findEnginnersByNameTeam/'+$scope.dash.team.name
+        //         }).then(function successCallback(response) {
+        //             $scope.engineers = response.data;
+        //         }, function errorCallback(response) {
+        //
+        //         });
+        //     }, function errorCallback(response) {
+        //
+        //     });
+        //
+        // }, function errorCallback(response) {
+        //
+        // });
 
         $http({
             method: 'GET',
@@ -702,54 +702,98 @@ angular.module('ColMEA.controllers', [])
         }).then(function successCallback(response) {
             $scope.part = response.data;
             localStorageService.set("IdPart",$scope.part.id_partition);
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + 'Coordinators/findCoordinatorByTeam/'+$scope.part.study.team.id_team
+                }).then(function successCallback(response) {
+                $scope.coordinator = response.data;
+            }, function errorCallback(response) {
+            });
         }, function errorCallback(response) {
 
         });
 
 
     })
-    .controller('PartitionEManagCtrl', function($scope, $http, localStorageService,$window,$state,$rootScope){
+
+
+.controller('PartitionEManagCtrl', function($scope, $http, localStorageService,$window,$state,$rootScope){
+    $scope.id=localStorageService.get("id_user");
+    $scope.idPart=localStorageService.get("IdPart");
+
+    $http({
+        method: 'GET',
+        // url: $scope.endpoint + 'Variables/findVariablesByEngineer/'+$scope.id
+        //  url: $scope.endpoint + 'Variables/findVariablesByPartition/1'
+        url: $scope.endpoint + 'Variables/findVariablesByPartition/2'
+    }).then(function successCallback(response) {
+        $scope.variables = response.data;
+        $rootScope.taille = response.data.length;
+
+    }, function errorCallback(response) {
+
+    });
+    $scope.update = function(variables) {
+        $state.go('updateVariableE',{}, {reload: true});
+        $rootScope.vable =variables;
+    };
+
+    $scope.displaySets = function(id){
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Variables/displayVariableWithSets/'+id
+        }).then(function successCallback(response) {
+            $scope.sets = response.data;
+            for (var i = 0; i <= response.data.length; i++) {
+                // alert(response.data[i].id_variable)
+                var id = response.data[i].id_set;
+                if ($scope.sets[i].value == null) {
+                    $http({
+                        method: 'GET',
+                        url: $scope.endpoint + 'Sets/findIntervalsBySet/' + id
+                    }).then(function successCallback(response) {
+                        $scope.intervals = response.data;
+                    }, function errorCallback(response) {
+
+                    })
+
+                }
+            }
+        }, function errorCallback(response) {
+
+        })
+
+    };
+
+})
+    .controller('SendCtrl', function($scope, $http, localStorageService,$window,$state,$rootScope){
         $scope.id=localStorageService.get("id_user");
+        $scope.idPart=localStorageService.get("IdPart");
 
         $http({
             method: 'GET',
-            url: $scope.endpoint + 'Variables/findVariablesByEngineer/'+$scope.id
-        }).then(function successCallback(response) {
-            $scope.variables = response.data;
-        }, function errorCallback(response) {
+            url: $scope.endpoint + 'Sets/getLatestRowSet/'+$scope.taille
+        }).then(function successCallback(responsedata) {
+            $scope.setss = responsedata.data;
+        }, function errorCallback(responsedata) {
 
         });
-        $scope.update = function(variables) {
-            $state.go('updateVariableE',{}, {reload: true});
-            $rootScope.vable =variables;
-        };
 
-        $scope.displaySets = function(id){
+
+
+        $scope.showSets = function(){
+
             $http({
                 method: 'GET',
-                url: $scope.endpoint + 'Variables/displayVariableWithSets/'+id
-            }).then(function successCallback(response) {
-                $scope.sets = response.data;
-                for (var i = 0; i <= response.data.length; i++) {
-                    // alert(response.data[i].id_variable)
-                    var id = response.data[i].id_set;
-                    if ($scope.sets[i].value == null) {
-                        $http({
-                            method: 'GET',
-                            url: $scope.endpoint + 'Sets/findIntervalsBySet/' + id
-                        }).then(function successCallback(response) {
-                            $scope.intervals = response.data;
-                        }, function errorCallback(response) {
+                url: $scope.endpoint + 'Sets/getLatestRowSet/'+$scope.taille
+            }).then(function successCallback(responsedata) {
+                $scope.setss = responsedata.data;
+            }, function errorCallback(responsedata) {
 
-                        })
+            });
+        }
 
-                    }
-                }
-            }, function errorCallback(response) {
 
-            })
-
-        };
 
 
         $scope.addSet = function(set,id) {

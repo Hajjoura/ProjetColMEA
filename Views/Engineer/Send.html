@@ -18,7 +18,7 @@
       </div>
       
       <!-- /.panel-heading -->
-      <div class="panel-body" ng-controller="PartitionEManagCtrl">
+      <div class="panel-body" ng-controller="SendCtrl">
         <div id="dataTables-example_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer"> 
           <!-- Tab panes -->
           <div class="tab-content">
@@ -65,24 +65,28 @@
                   </thead>
                   <tbody>
 
-                    <tr class="" ng-repeat="variable in variables">
-                      <td> {{variable.id_variable}} </td>
-                      <td> {{variable.name}}</td>
+                    <tr class="" ng-repeat="s in setss">
+
+                      <td> {{s.variable.id_variable}} </td>
+                      <td> {{s.variable.name}}</td>
 
                       <td> <input class="form-control-static" ng-model="min" placeholder="Enter Min" id="nameproject"> </td>
                       <td> <input class="form-control-static" ng-model="max" placeholder="Enter Max" id="nameproject"> </td>
                       <td> 
-                      	<input class="form-control-static" ng-model="set.value" placeholder="Enter Set" id="nameproject">
+                      	<input class="form-control-static" ng-model="set.value" placeholder="" id="nameproject">
+
                         <button href="#" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#addSet">
                           <span class="glyphicon glyphicon-plus-sign"></span> </button>
                       	<button  type="button" ng-click="addSet(set,variable.id_variable)"class="btn btn-outline btn-primary btn-xs">Add</button>
+                        {{s.value}}
+
+
                       </td>
                     <td>
                       <p>
                         <button type="button" ng-click="updateVariable(this.variable,min,max)" class="btn btn-warning btn-circle btn-sm"  > <i class="fa fa-send">   </i> </button>
                       </p>
                     </td>
-
                     </tr>
                   </tbody>
                 </table>
@@ -132,6 +136,33 @@
                 <!-- /.modal-content -->
               </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
+
+          <!-- Modal -->
+          <div class="modal fade" id="detail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  <h1> Variable Details</h1>
+                </div>
+                <div class="modal-body">
+
+
+                  <div class="well" ng-repeat="s in setss">
+                    {{s.value}}
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+
+                </div>
+
+
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
             <div class="row">
               <div class="col-sm-6">
                 <div class="dataTables_paginate paging_simple_numbers" id="dataTables-example_paginate">
@@ -148,7 +179,9 @@
               </div>
             </div>
           <p class="center">
-            <button ui-sref="HomeEngineer.DashboardE" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-ok"></span> Finish </button>          </p>
+            <button ng-click="showSets()" data-toggle="modal" data-target="#detail" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-ok"></span> Show </button>          </p>
+
+        <button ui-sref="HomeEngineer.DashboardE" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-ok"></span> Finish </button>          </p>
           </div>
           <!-- /.panel-body --> 
         </div>
