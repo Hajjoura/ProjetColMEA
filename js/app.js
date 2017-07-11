@@ -2,6 +2,8 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
 
 .run(function($rootScope, localStorageService) {
     $rootScope.endpoint = "http://localhost:8080/ColMEA.Web/";
+    //http://52.169.193.106:8080/ColMEA-web/
+
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -174,6 +176,30 @@ angular.module('ColMEA', ['ui.router', 'ColMEA.controllers','LocalStorageModule'
             controller:'PartitionCCtrl'
 
         })
+        .state('VariablesC', {
+            url: '/VariablesDetail',
+            templateUrl: 'Views/Coordinator/VariablesDetail.html',
+            parent:'HomeCoordinator',
+            controller:'DisplayvariablesCtrl'
+
+        })
+
+        .state('ConstraintsC', {
+            url: '/ConstraintsDetail',
+            templateUrl: 'Views/Coordinator/ConstraintsDetail.html',
+            parent:'HomeCoordinator',
+            controller:'DisplaycontraintsCtrl'
+
+        })
+
+        .state('ObjectivesC', {
+            url: '/ObjectivesDetail',
+            templateUrl: 'Views/Coordinator/ObjectivesDetail.html',
+            parent:'HomeCoordinator',
+            controller:'DisplayobjectivesCtrl'
+
+        })
+
         .state('HomeCoordinator.PartitionCManag', {
             url: '/PartitionCManag',
             templateUrl: 'Views/Coordinator/PartitionDetail.html',

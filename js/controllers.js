@@ -578,6 +578,53 @@ angular.module('ColMEA.controllers', [])
 
         });
     })
+    .controller('DisplayvariablesCtrl', function($scope, $http, localStorageService,$state,$rootScope) {
+
+        $scope.id=localStorageService.get("id_user");
+
+
+            $http({
+                method: 'GET',
+                url: $scope.endpoint + 'Variables/findSharedVariableByCoodinator/' +$scope.id
+            }).then(function successCallback(response) {
+                $scope.variable = response.data;
+            }, function errorCallback(response) {
+
+            });
+    })
+
+
+    .controller('DisplaycontraintsCtrl', function($scope, $http, localStorageService,$state,$rootScope) {
+
+        $scope.id=localStorageService.get("id_user");
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Constraints/findConstraintsByCoordinator/'+ $scope.id
+        }).then(function successCallback(response) {
+            $scope.variable = response.data;
+        }, function errorCallback(response) {
+
+        });
+
+    })
+
+    .controller('DisplayobjectivesCtrl', function($scope, $http, localStorageService,$state,$rootScope) {
+
+        $scope.id=localStorageService.get("id_user");
+
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Objectives/findObjectivesByCoordinator/' + $scope.id
+        }).then(function successCallback(response) {
+            $scope.variable = response.data;
+        }, function errorCallback(response) {
+
+        });
+    })
+
+
     .controller('PartitionManagCCtrl', function($scope, $http, localStorageService,$state,$rootScope) {
 
         $scope.id=localStorageService.get("id_user");
@@ -589,7 +636,18 @@ angular.module('ColMEA.controllers', [])
         }, function errorCallback(response) {
 
         });
+ $scope.displayVariables=function(){
+     $state.go('VariablesC',{}, {reload: true});
+     $http({
+         method: 'GET',
+         url: $scope.endpoint + 'Variables/findVariablesByCoordinator/'+ $scope.id
+     }).then(function successCallback(response) {
+         $scope.variable = response.data;
+     }, function errorCallback(response) {
 
+     });
+
+ };
         $scope.displayMinMax = function(id){
             $http({
                 method: 'GET',
@@ -724,8 +782,8 @@ angular.module('ColMEA.controllers', [])
     $http({
         method: 'GET',
         // url: $scope.endpoint + 'Variables/findVariablesByEngineer/'+$scope.id
-        //  url: $scope.endpoint + 'Variables/findVariablesByPartition/1'
-        url: $scope.endpoint + 'Variables/findVariablesByPartition/2'
+         url: $scope.endpoint + 'Variables/findVariablesByPartition/1'
+        //url: $scope.endpoint + 'Variables/findVariablesByPartition/2'
     }).then(function successCallback(response) {
         $scope.variables = response.data;
         $rootScope.taille = response.data.length;
