@@ -12,8 +12,8 @@
                                 <div class="form-group">
                                 	<label for="enabledSelect">Please Select Project</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option ng-repeat="s in Studies">
-                                            {{s.project.name}}
+                                        <option ng-repeat=" p in projects ">
+                                            <p ng-model="study.project"> {{p.name}}</p>
                                         </option>
                                     </select>
                                 </div>

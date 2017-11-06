@@ -1,5 +1,5 @@
-    <div class="container">
-        <div class="row">
+
+        <div class="row" ng-controller="AddEngineerMCtrl">
             <div class="col-lg-12">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
@@ -11,43 +11,53 @@
                                 <div class="form-group">
                                 	<label for="enabledSelect">Team</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option> List of Teams</option>
+
+                                        <option ng-repeat=" t in teams ">
+                                            <p ng-model="team"> {{t.name}}</p>
+                                        </option>
+
                                     </select>
                                 </div>
+
                                 <div class="form-group">
                                 	<label for="enabledSelect">Domain</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option> List of Domains</option>
+
+                                        <option ng-repeat=" d in domains ">
+                                            <p ng-model="engineer.domain"> {{d.label}}</p>
+                                        </option>
+
                                     </select>
                                 </div>
+
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input class="form-control" placeholder="Enter Number" id="firstnameuser">
+                                    <input class="form-control" ng-model="engineer.first_name" placeholder="Enter Number" id="firstnameuser">
                                 </div>
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input class="form-control" placeholder="Enter Number" id="lastnameuser">
+                                    <input class="form-control" ng-model="engineer.last_name" placeholder="Enter Number" id="lastnameuser">
                                 </div>
                                 <div class="form-group">
                                     <label>Service</label>
-                                    <input class="form-control" placeholder="Enter Number" id="serviceuser">
+                                    <input class="form-control" ng-model="engineer.service" placeholder="Enter Number" id="serviceuser">
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input class="form-control" placeholder="Enter Number" id="emailuser">
+                                    <input class="form-control" ng-model="engineer.email" placeholder="Enter Number" id="emailuser">
                                 </div>
                                 <div class="form-group">
                                     <label>Note</label>
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea ng-model="engineer.note" class="form-control" rows="3"></textarea>
                                 </div>
 
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a ui-sref="HomeManager.ListEngineerM" class="btn btn-lg btn-primary btn-block">Add Engineer</a>
+                                <a ng-click="addEngineer(engineer)" class="btn btn-lg btn-primary btn-block">Add Engineer</a>
                             </fieldset>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+
 

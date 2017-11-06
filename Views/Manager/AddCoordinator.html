@@ -1,5 +1,5 @@
 
-        <div class="row">
+        <div class="row" ng-controller="AddCoordinatorMCtrl">
             <div class="col-lg-12">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
@@ -9,34 +9,38 @@
                         <form role="form">
                             <fieldset>
                                 <div class="form-group">
-                                	<label for="enabledSelect">Team</label>
+                                    <label for="enabledSelect">Team</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option> List of Teams</option>
+
+                                        <option ng-repeat=" t in teams ">
+                                            <p ng-model="coordinator.team"> {{t.name}}</p>
+                                        </option>
+
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>First Name</label>
-                                    <input class="form-control" placeholder="Enter Number" id="firstnameuser">
+                                    <input class="form-control" ng-model="coordinator.first_name" placeholder="Enter Number" id="firstnameuser">
                                 </div>
                                 <div class="form-group">
                                     <label>Last Name</label>
-                                    <input class="form-control" placeholder="Enter Number" id="lastnameuser">
+                                    <input class="form-control" ng-model="coordinator.last_name" placeholder="Enter Number" id="lastnameuser">
                                 </div>
                                 <div class="form-group">
                                     <label>Service</label>
-                                    <input class="form-control" placeholder="Enter Number" id="serviceuser">
+                                    <input class="form-control" ng-model="coordinator.service" placeholder="Enter Number" id="serviceuser">
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input class="form-control" placeholder="Enter Number" id="emailuser">
+                                    <input class="form-control" ng-model="coordinator.email" placeholder="Enter Number" id="emailuser">
                                 </div>
                                 <div class="form-group">
                                     <label>Note</label>
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea class="form-control" ng-model="coordinator.note" rows="3"></textarea>
                                 </div>
 
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a ui-sref="HomeManager.CoordinatorM" class="btn btn-lg btn-primary btn-block">Add Coordinator</a>
+                                <a  ng-click="addCoordinator(coordinator)" class="btn btn-lg btn-primary btn-block">Add Coordinator</a>
                             </fieldset>
                         </form>
                     </div>

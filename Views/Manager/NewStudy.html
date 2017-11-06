@@ -11,8 +11,8 @@
                                 <div class="form-group">
                                 	<label for="enabledSelect">Please Select Project</label>
                                     <select id="enabledSelect" class="form-control">
-                                    	<option ng-repeat=" p in projects ">
-                                          <p ng-model="study.project"> {{p.name}}</p>
+                                    	<option ng-repeat=" project in projects ">
+                                          <p ng-model="study.project"> {{project.id_project+" "+ project.name}}</p>
                                         </option>
                                     </select>
                                 </div>
@@ -21,12 +21,11 @@
                                     <input class="form-control" ng-model="study.number" placeholder="Enter Number" id="numberstudy">
                                 </div>
                                 <div class="form-group">
-                                    <label>Type</label>
-                                    <input class="form-control" ng-model="study.type" placeholder="Enter Type" id="typestudy">
+                                    <label>Name Study</label>
+                                    <input class="form-control" ng-model="study.type" placeholder="Enter here" id="typestudy">
                                 </div>
-
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a ng-click="addStudie(study)" class="btn btn-lg btn-info btn-block">Add Study</a>
+                                <a ng-click="addStudy(study)" class="btn btn-lg btn-info btn-block">Add Study</a>
                             </fieldset>
                         </form>
                     </div>

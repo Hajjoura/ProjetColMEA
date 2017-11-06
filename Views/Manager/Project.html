@@ -60,8 +60,8 @@
                                      <td> {{ project.version}} </td>
                                      <td> {{ project.state}} </td>
 
-                                     <td class="center"> {{project.start_date}} </td>
-                                     <td class="center"> {{project.end_date}} </td>
+                                     <td class="center" ng-bind="date | date:'dd/MM/yyyy'"> {{project.start_date}} </td>
+                                     <td class="center"ng-bind="date | date:'dd/MM/yyyy'"> {{project.end_date}} </td>
                                      <td class="center">
                                          <p>
 

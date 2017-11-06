@@ -4,6 +4,7 @@ angular.module('ColMEA.controllers', [])
 
     })
 
+
     //************************** Home Controllers ****************************//
 
     .controller('HomeMCtrl', function($scope, $http, localStorageService) {
@@ -71,9 +72,25 @@ angular.module('ColMEA.controllers', [])
         }, function errorCallback(response) {
 
         });
+
+        $scope.deleteTeam = function(id){
+            var res = confirm("Are you sure?")
+            if (res == true){
+                $http({
+                    method: 'DELETE',
+                    url: $scope.endpoint + 'Teams/DeleteTeam/'+id,
+
+                }).then(function successCallback(response) {
+                    $state.go('HomeManager.TeamM',{}, {reload: true});
+                }, function errorCallback(response) {
+                    $state.go('HomeManager.TeamM',{}, {reload: true});
+                });
+            }
+        };
     })
 
     .controller('ProjectMCtrl', function($scope, $http, localStorageService,$state,$window,$rootScope) {
+        $scope.date = '20140313T00:00:00';
         $scope.id=localStorageService.get("id_user");
         $http({
             method: 'GET',
@@ -91,11 +108,13 @@ angular.module('ColMEA.controllers', [])
                 headers: {'Content-Type': 'application/json'},
                 data: $scope.project
             }).then(function successCallback(response) {
+                $window.alert("The Project was created successfully");
                 $state.go('HomeManager.ProjectM',{}, {reload: true});
             }, function errorCallback(response) {
                 $window.alert("Please check project details!");
             });
         };
+
         $scope.editProject = function(project){
 
             $state.go('EditProject',{}, {reload: true});
@@ -139,6 +158,7 @@ angular.module('ColMEA.controllers', [])
 
         };
     })
+
     .controller('PartitionMCtrl', function($scope, $http, localStorageService,$state,$window) {
         $scope.id=localStorageService.get("id_user");
 
@@ -158,14 +178,34 @@ angular.module('ColMEA.controllers', [])
         }, function errorCallback(response) {
 
         });
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Studies/findStudiesByManager/'+$scope.id
+        }).then(function successCallback(response) {
+            $scope.Studies = response.data;
+        }, function errorCallback(response) {
+
+        });
+
          $http({
             method: 'GET',
             url: $scope.endpoint + 'Projects'
+        }).then(function successCallback(response) {
+            $scope.projects = response.data;
+        }, function errorCallback(response) {
+
+        });
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Studies/findStudiesByManager/'+$scope.id
         }).then(function successCallback(response) {
             $scope.projets = response.data;
         }, function errorCallback(response) {
 
         });
+
          $scope.addPartition = function(partition){
              $scope.partition = partition;
              $http({
@@ -426,7 +466,8 @@ angular.module('ColMEA.controllers', [])
         }, function errorCallback(response) {
 
         });
-        $scope.addStudie = function(study){
+
+        $scope.addStudy = function(study){
             $scope.study = study;
             $http({
                 method: 'POST',
@@ -436,7 +477,23 @@ angular.module('ColMEA.controllers', [])
             }).then(function successCallback(response) {
                 $state.go('HomeManager.ListStudieM',{}, {reload: true});
             }, function errorCallback(response) {
-                $window.alert("Please check project details!");
+                $window.alert("Please check Study details!");
+            });
+        };
+
+
+        $scope.addStudies = function(study,p){
+            $scope.study = study;
+            $scope.id = p.id_project;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Studies/addStudies/'+$scope.id,
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.study
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.ListStudieM',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check Study details!");
             });
         };
 
@@ -781,8 +838,8 @@ angular.module('ColMEA.controllers', [])
 
     $http({
         method: 'GET',
-        // url: $scope.endpoint + 'Variables/findVariablesByEngineer/'+$scope.id
-         url: $scope.endpoint + 'Variables/findVariablesByPartition/1'
+         //url: $scope.endpoint + 'Variables/findVariablesByEngineer/'+$scope.idPart
+         url: $scope.endpoint + 'Variables/findVariablesByPartition/3'
         //url: $scope.endpoint + 'Variables/findVariablesByPartition/2'
     }).then(function successCallback(response) {
         $scope.variables = response.data;
@@ -1015,4 +1072,135 @@ angular.module('ColMEA.controllers', [])
             })
 
 
-;
+    .controller('AddTeamMCtrl', function($scope, $http, localStorageService,$state) {
+        $scope.id=localStorageService.get("id_user");
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Coordinators'
+        }).then(function successCallback(response) {
+            $scope.coordinators = response.data;
+        }, function errorCallback(response) {
+
+        });
+
+        $scope.addTeam = function(team,c){
+            $scope.team = team;
+            $scope.coordinator=c;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Teams/addTeamWithCoord',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.team
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.TeamM',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check team details!");
+            });
+        };
+
+    })
+
+    .controller('AddDomainMCtrl', function($scope, $http, localStorageService,$state) {
+        $scope.id=localStorageService.get("id_user");
+
+        $scope.addDomain = function(domain){
+            $scope.domain = domain;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Domains',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.domain
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.DomainM',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check team details!");
+            });
+        };
+    })
+
+
+    .controller('AddEngineerMCtrl', function($scope, $http, localStorageService,$state) {
+        $scope.id=localStorageService.get("id_user");
+
+        $scope.addEngineer = function(engineer){
+            $scope.engineer = engineer;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Engineers',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.engineer
+            }).then(function successCallback(response) {
+               $state.go('HomeManager.EngineerM',{}, {reload: true});
+            }, function errorCallback(response) {
+               $window.alert("Please check engineer details!");
+            });
+        };
+
+        $scope.addEngineerToTeam = function(team,engineer){
+            $scope.engineer = engineer;
+            $scope.team = team;
+
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Engineers',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.engineer
+            })      .then(function successCallback(response) {
+                $state.go('HomeManager.EngineerM',{}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check engineer details!");
+            });
+        };
+
+        $scope.runBoth = function (engineer,team) {
+            addEngineer(engineer);
+            addEngineerToTeam(engineer,team);
+        };
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Teams'
+        }).then(function successCallback(response) {
+            $scope.teams = response.data;
+        }, function errorCallback(response) {
+        });
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Domains'
+        }).then(function successCallback(response) {
+            $scope.domains = response.data;
+        }, function errorCallback(response) {
+
+        });
+
+    })
+
+
+    .controller('AddCoordinatorMCtrl', function($scope, $http, localStorageService,$state) {
+        $scope.id = localStorageService.get("id_user");
+
+        $scope.addCoordinator = function (coordinator) {
+            $scope.coordinator = coordinator;
+            $http({
+                method: 'POST',
+                url: $scope.endpoint + 'Coordinators',
+                headers: {'Content-Type': 'application/json'},
+                data: $scope.coordinator
+            }).then(function successCallback(response) {
+                $state.go('HomeManager.CoordinatorM', {}, {reload: true});
+            }, function errorCallback(response) {
+                $window.alert("Please check coordinator details!");
+            });
+        };
+
+        $http({
+            method: 'GET',
+            url: $scope.endpoint + 'Teams'
+        }).then(function successCallback(response) {
+            $scope.teams = response.data;
+        }, function errorCallback(response) {
+        });
+
+    })
